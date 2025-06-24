@@ -616,6 +616,262 @@ select::-webkit-select-option {
     color: #ffffff;
 }
 
+/* Campaign Continuity Section */
+.campaign-continuity {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.continuity-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.continuity-icon {
+    background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
+    color: var(--text-white);
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.continuity-content h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin: 0 0 0.5rem 0;
+}
+
+.continuity-content p {
+    color: var(--text-gray);
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.continuity-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.continuity-option {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.continuity-option:hover {
+    border-color: var(--accent-blue);
+    background: rgba(79, 195, 247, 0.05);
+    transform: translateY(-2px);
+}
+
+.continuity-option.selected {
+    border-color: var(--accent-blue);
+    background: rgba(79, 195, 247, 0.1);
+}
+
+.option-header {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.option-badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background: var(--success-green);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.option-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 0 0 0.25rem 0;
+}
+
+.frequency {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.option-dates {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.date-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+}
+
+.date-item:last-child {
+    border-bottom: none;
+}
+
+.date-text {
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+.date-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.date-status.available {
+    background: var(--success-light);
+    color: var(--success-green);
+}
+
+.date-status.limited {
+    background: var(--warning-light);
+    color: var(--warning-orange);
+}
+
+.option-pricing {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.original-price {
+    color: var(--text-gray);
+    text-decoration: line-through;
+    margin-bottom: 0.25rem;
+}
+
+.discounted-price {
+    color: var(--text-white);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.savings {
+    color: var(--success-green);
+    font-weight: 600;
+}
+
+.btn-add-continuity {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-add-continuity:hover {
+    background: var(--accent-blue);
+    color: var(--text-white);
+    transform: translateY(-1px);
+}
+
+.btn-add-continuity.added {
+    background: var(--success-green);
+    border-color: var(--success-green);
+    color: white;
+}
+
+.btn-add-continuity.added:hover {
+    background: var(--success-green);
+    opacity: 0.9;
+}
+
+.continuity-benefits {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.continuity-benefits h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.benefit-item i {
+    color: var(--accent-blue);
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+/* Price Breakdown */
+.price-breakdown {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0;
+    color: var(--text-gray);
+}
+
+.breakdown-item.discount {
+    color: var(--success-green);
+    font-weight: 600;
+}
+
 /* Custom Scrollbar for time slots */
 .time-slots-grid::-webkit-scrollbar {
     width: 6px;
@@ -788,6 +1044,15 @@ select::-webkit-select-option {
     .summary-actions {
         justify-content: space-between;
     }
+    
+    .continuity-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {
@@ -832,6 +1097,20 @@ select::-webkit-select-option {
     .btn-continue {
         width: 100%;
         justify-content: center;
+    }
+    
+    .campaign-continuity {
+        padding: 1.5rem;
+    }
+    
+    .continuity-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .continuity-option {
+        padding: 1rem;
     }
 }
 

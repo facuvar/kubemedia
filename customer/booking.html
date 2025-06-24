@@ -156,6 +156,101 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Campaign Continuity Section -->
+            <section class="campaign-continuity" id="campaignContinuity" style="display: none;">
+                <div class="continuity-header">
+                    <div class="continuity-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="continuity-content">
+                        <h3>¿Te gustaría reservar además estas fechas?</h3>
+                        <p>Darle continuidad a tu anuncio potencia tu presencia de marca y visualizaciones</p>
+                    </div>
+                </div>
+
+                <div class="continuity-options">
+                    <div class="continuity-option" data-days="3">
+                        <div class="option-header">
+                            <div class="option-badge">Recomendado</div>
+                            <h4>Continuidad de 3 días</h4>
+                            <p class="frequency">Mismo horario, cada 3 días</p>
+                        </div>
+                        <div class="option-dates" id="dates3days">
+                            <!-- Dates will be populated by JavaScript -->
+                        </div>
+                        <div class="option-pricing">
+                            <div class="original-price">Precio normal: <span id="originalPrice3">$0</span></div>
+                            <div class="discounted-price">Con descuento: <span id="discountedPrice3">$0</span></div>
+                            <div class="savings">Ahorrás: <span id="savings3">$0</span></div>
+                        </div>
+                        <button class="btn-add-continuity" onclick="addContinuity(3)">
+                            <i class="fas fa-plus"></i>
+                            Agregar (Descuento 10%)
+                        </button>
+                    </div>
+
+                    <div class="continuity-option" data-days="7">
+                        <div class="option-header">
+                            <h4>Continuidad semanal</h4>
+                            <p class="frequency">Mismo horario, cada 7 días</p>
+                        </div>
+                        <div class="option-dates" id="dates7days">
+                            <!-- Dates will be populated by JavaScript -->
+                        </div>
+                        <div class="option-pricing">
+                            <div class="original-price">Precio normal: <span id="originalPrice7">$0</span></div>
+                            <div class="discounted-price">Con descuento: <span id="discountedPrice7">$0</span></div>
+                            <div class="savings">Ahorrás: <span id="savings7">$0</span></div>
+                        </div>
+                        <button class="btn-add-continuity" onclick="addContinuity(7)">
+                            <i class="fas fa-plus"></i>
+                            Agregar (Descuento 15%)
+                        </button>
+                    </div>
+
+                    <div class="continuity-option" data-days="10">
+                        <div class="option-header">
+                            <h4>Continuidad extendida</h4>
+                            <p class="frequency">Mismo horario, cada 10 días</p>
+                        </div>
+                        <div class="option-dates" id="dates10days">
+                            <!-- Dates will be populated by JavaScript -->
+                        </div>
+                        <div class="option-pricing">
+                            <div class="original-price">Precio normal: <span id="originalPrice10">$0</span></div>
+                            <div class="discounted-price">Con descuento: <span id="discountedPrice10">$0</span></div>
+                            <div class="savings">Ahorrás: <span id="savings10">$0</span></div>
+                        </div>
+                        <button class="btn-add-continuity" onclick="addContinuity(10)">
+                            <i class="fas fa-plus"></i>
+                            Agregar (Descuento 20%)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="continuity-benefits">
+                    <h4>Beneficios de la continuidad</h4>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <i class="fas fa-eye"></i>
+                            <span>+65% más visualizaciones promedio</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-brain"></i>
+                            <span>Mayor recordación de marca</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-percentage"></i>
+                            <span>Descuentos progresivos</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Mejor ROI publicitario</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -180,9 +275,27 @@
                         <span class="label">Anuncio:</span>
                         <span class="value" id="summaryAd">-</span>
                     </div>
+                    <div class="summary-item" id="summaryAdditional" style="display: none;">
+                        <span class="label">Fechas adicionales:</span>
+                        <span class="value" id="summaryAdditionalDates">-</span>
+                    </div>
                 </div>
                 <div class="summary-actions">
                     <div class="total-price">
+                        <div class="price-breakdown" id="priceBreakdown" style="display: none;">
+                            <div class="breakdown-item">
+                                <span>Reserva principal:</span>
+                                <span id="mainBookingPrice">$0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Fechas adicionales:</span>
+                                <span id="additionalBookingPrice">$0</span>
+                            </div>
+                            <div class="breakdown-item discount">
+                                <span>Descuento aplicado:</span>
+                                <span id="discountAmount">-$0</span>
+                            </div>
+                        </div>
                         <span class="price-label">Total:</span>
                         <span class="price-amount" id="totalPrice">$0</span>
                     </div>

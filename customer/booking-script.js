@@ -6,6 +6,7 @@ let selectedTimeSlot = null;
 let selectedAd = null;
 let selectedDuration = 15;
 let locationData = null;
+let additionalBookings = [];
 
 // Location data mapping
 const locationsData = {
@@ -194,6 +195,9 @@ function selectDate(date) {
     // Generate time slots for selected date
     generateTimeSlots();
     updateBookingSummary();
+    
+    // Show campaign continuity section after selecting a date
+    showCampaignContinuity();
 }
 
 function previousMonth() {
@@ -379,17 +383,23 @@ function createNewAd() {
     window.location.href = 'dashboard.html#upload';
 }
 
-// Booking Summary Management
+// Booking Summary Management - Updated to include continuity
 function updateBookingSummary() {
     const summaryElement = document.getElementById('bookingSummary');
     const summaryDate = document.getElementById('summaryDate');
     const summaryTime = document.getElementById('summaryTime');
     const summaryDuration = document.getElementById('summaryDuration');
     const summaryAd = document.getElementById('summaryAd');
+    const summaryAdditional = document.getElementById('summaryAdditional');
+    const summaryAdditionalDates = document.getElementById('summaryAdditionalDates');
     const totalPrice = document.getElementById('totalPrice');
     const continueButton = document.querySelector('.btn-continue');
+    const priceBreakdown = document.getElementById('priceBreakdown');
+    const mainBookingPrice = document.getElementById('mainBookingPrice');
+    const additionalBookingPrice = document.getElementById('additionalBookingPrice');
+    const discountAmount = document.getElementById('discountAmount');
     
-    // Update summary fields
+    // Update basic summary fields
     summaryDate.textContent = selectedDate ? 
         new Intl.DateTimeFormat('es-ES', { 
             day: 'numeric',
@@ -401,10 +411,35 @@ function updateBookingSummary() {
     summaryDuration.textContent = selectedDuration ? `${selectedDuration} segundos` : '-';
     summaryAd.textContent = selectedAd ? selectedAd.title : '-';
     
-    // Calculate and update total price
-    const price = locationData && locationData.pricing[selectedDuration] ? 
+    // Calculate prices
+    const mainPrice = locationData && locationData.pricing[selectedDuration] ? 
         locationData.pricing[selectedDuration] : 0;
-    totalPrice.textContent = `$${price}`;
+    
+    let finalTotalPrice = mainPrice;
+    let additionalPrice = 0;
+    let totalDiscount = 0;
+    
+    if (additionalBookings.length > 0) {
+        const additional = additionalBookings[0];
+        additionalPrice = additional.discountedPrice;
+        totalDiscount = additional.originalPrice - additional.discountedPrice;
+        finalTotalPrice += additionalPrice;
+        
+        // Show additional dates info
+        summaryAdditional.style.display = 'block';
+        summaryAdditionalDates.textContent = `${additional.slots} fechas cada ${additional.dayInterval} días`;
+        
+        // Show price breakdown
+        priceBreakdown.style.display = 'block';
+        mainBookingPrice.textContent = `$${mainPrice}`;
+        additionalBookingPrice.textContent = `$${additional.originalPrice}`;
+        discountAmount.textContent = `-$${totalDiscount}`;
+    } else {
+        summaryAdditional.style.display = 'none';
+        priceBreakdown.style.display = 'none';
+    }
+    
+    totalPrice.textContent = `$${finalTotalPrice}`;
     
     // Show/hide summary and enable/disable continue button
     const isComplete = selectedDate && selectedTimeSlot && selectedAd && selectedDuration;
@@ -459,6 +494,136 @@ function proceedToPayment() {
         }, 2000);
     }, 1500);
 }
+
+// Campaign Continuity Functions
+function showCampaignContinuity() {
+    if (!selectedDate || !selectedTimeSlot) return;
+    
+    const continuitySection = document.getElementById('campaignContinuity');
+    continuitySection.style.display = 'block';
+    
+    // Generate dates for each option
+    generateContinuityDates(3);
+    generateContinuityDates(7);
+    generateContinuityDates(10);
+    
+    // Calculate pricing
+    updateContinuityPricing();
+}
+
+function generateContinuityDates(dayInterval) {
+    const datesContainer = document.getElementById(`dates${dayInterval}days`);
+    const baseDate = new Date(selectedDate);
+    const dates = [];
+    
+    // Generate 4 additional dates with the specified interval
+    for (let i = 1; i <= 4; i++) {
+        const futureDate = new Date(baseDate);
+        futureDate.setDate(baseDate.getDate() + (dayInterval * i));
+        dates.push(futureDate);
+    }
+    
+    datesContainer.innerHTML = dates.map(date => {
+        const dateString = new Intl.DateTimeFormat('es-ES', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short'
+        }).format(date);
+        
+        // Randomly assign availability for demo
+        const isAvailable = Math.random() > 0.2; // 80% chance of being available
+        const status = isAvailable ? 'available' : 'limited';
+        const statusText = isAvailable ? 'Disponible' : 'Limitado';
+        
+        return `
+            <div class="date-item">
+                <span class="date-text">${dateString}</span>
+                <span class="date-status ${status}">${statusText}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function updateContinuityPricing() {
+    const basePrice = locationData.pricing[selectedDuration];
+    const additionalSlots = 4; // 4 additional bookings
+    
+    // Calculate prices for each option
+    const options = [
+        { days: 3, discount: 0.10 },
+        { days: 7, discount: 0.15 },
+        { days: 10, discount: 0.20 }
+    ];
+    
+    options.forEach(option => {
+        const originalPrice = basePrice * additionalSlots;
+        const discountedPrice = originalPrice * (1 - option.discount);
+        const savings = originalPrice - discountedPrice;
+        
+        document.getElementById(`originalPrice${option.days}`).textContent = `$${originalPrice}`;
+        document.getElementById(`discountedPrice${option.days}`).textContent = `$${discountedPrice}`;
+        document.getElementById(`savings${option.days}`).textContent = `$${savings}`;
+    });
+}
+
+function addContinuity(dayInterval) {
+    const option = document.querySelector(`[data-days="${dayInterval}"]`);
+    const button = option.querySelector('.btn-add-continuity');
+    
+    if (button.classList.contains('added')) {
+        // Remove continuity
+        removeContinuity(dayInterval);
+        return;
+    }
+    
+    // Remove other selections first
+    document.querySelectorAll('.continuity-option').forEach(opt => {
+        opt.classList.remove('selected');
+        const btn = opt.querySelector('.btn-add-continuity');
+        btn.classList.remove('added');
+        btn.innerHTML = '<i class="fas fa-plus"></i> Agregar (' + btn.textContent.split('(')[1];
+    });
+    
+    // Add this selection
+    option.classList.add('selected');
+    button.classList.add('added');
+    button.innerHTML = '<i class="fas fa-check"></i> Agregado';
+    
+    // Store additional booking info
+    const discounts = { 3: 0.10, 7: 0.15, 10: 0.20 };
+    const basePrice = locationData.pricing[selectedDuration];
+    const additionalSlots = 4;
+    const originalPrice = basePrice * additionalSlots;
+    const discountedPrice = originalPrice * (1 - discounts[dayInterval]);
+    
+    additionalBookings = [{
+        dayInterval: dayInterval,
+        slots: additionalSlots,
+        originalPrice: originalPrice,
+        discountedPrice: discountedPrice,
+        discount: discounts[dayInterval]
+    }];
+    
+    updateBookingSummary();
+    showNotification(`Continuidad de ${dayInterval} días agregada con ${(discounts[dayInterval] * 100)}% de descuento!`, 'success');
+}
+
+function removeContinuity(dayInterval) {
+    const option = document.querySelector(`[data-days="${dayInterval}"]`);
+    const button = option.querySelector('.btn-add-continuity');
+    
+    option.classList.remove('selected');
+    button.classList.remove('added');
+    
+    const discountText = dayInterval === 3 ? '10%' : dayInterval === 7 ? '15%' : '20%';
+    button.innerHTML = `<i class="fas fa-plus"></i> Agregar (Descuento ${discountText})`;
+    
+    additionalBookings = [];
+    updateBookingSummary();
+    showNotification('Continuidad removida', 'info');
+}
+
+
 
 // Handle dashboard upload redirect
 if (window.location.hash === '#upload') {
