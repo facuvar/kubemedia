@@ -84,7 +84,7 @@
                 <div class="ad-preview">
                     <div class="preview-placeholder">
                         <i class="fas fa-image"></i>
-                        <p>whopper_promotion.jpg</p>
+                        <p class="media-filename" data-type="image" data-src="media/whopper_promotion.jpg">whopper_promotion.jpg</p>
                     </div>
                     <div class="ad-details">
                         <h3>Whopper Doble con Queso</h3>
@@ -124,7 +124,7 @@
                 <div class="ad-preview">
                     <div class="preview-placeholder">
                         <i class="fas fa-play"></i>
-                        <p>iphone_15_promo.mp4</p>
+                        <p class="media-filename" data-type="video" data-src="https://www.youtube.com/watch?v=GDlkCkcIqTs">iphone_15_promo.mp4</p>
                     </div>
                     <div class="ad-details">
                         <h3>iPhone 15 Pro - Preventa</h3>
@@ -164,7 +164,7 @@
                 <div class="ad-preview">
                     <div class="preview-placeholder">
                         <i class="fas fa-image"></i>
-                        <p>mascara_voluminous.jpg</p>
+                        <p class="media-filename" data-type="image" data-src="media/whopper_promotion.jpg">mascara_voluminous.jpg</p>
                     </div>
                     <div class="ad-details">
                         <h3>Máscara Voluminous Lash</h3>
@@ -234,6 +234,24 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Modal para preview de medios -->
+    <div id="mediaModal" class="media-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Vista Previa del Anuncio</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="imageContainer" class="media-container">
+                    <img id="previewImage" src="" alt="Vista previa">
+                </div>
+                <div id="videoContainer" class="media-container">
+                    <iframe id="previewVideo" width="100%" height="315" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
         </div>
     </div>
 
