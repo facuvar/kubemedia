@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kube Anuncios Digitales</title>
+    <link rel="stylesheet" href="customer-styles.css">
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="../logo-blanco.png" alt="Kube" class="logo">
+                    <div class="user-info">
+                        <span class="welcome-text">¡Hola!</span>
+                        <span class="user-name" id="userName">Usuario</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn-upload" onclick="showUploadModal()">
+                        <i class="fas fa-plus"></i>
+                        Crear anuncio
+                    </button>
+                    <div class="user-menu">
+                        <button class="user-avatar" onclick="toggleUserMenu()">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="#" onclick="showProfile()">
+                                <i class="fas fa-user"></i>
+                                Mi perfil
+                            </a>
+                            <a href="#" onclick="showMyAds()">
+                                <i class="fas fa-ad"></i>
+                                Mis anuncios
+                            </a>
+                            <a href="#" onclick="showBilling()">
+                                <i class="fas fa-credit-card"></i>
+                                Facturación
+                            </a>
+                            <hr>
+                            <a href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Quick Stats -->
+            <section class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Anuncios activos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2</h3>
+                        <p>Pendientes aprobación</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>12.4K</h3>
+                        <p>Visualizaciones hoy</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>$2.850</h3>
+                        <p>Gastado este mes</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filter-section">
+                <div class="filter-header">
+                    <h2>Espacios disponibles</h2>
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="locationFilter">Ubicación:</label>
+                            <select id="locationFilter" onchange="filterLocations()">
+                                <option value="">Todas las ubicaciones</option>
+                                <option value="buenos-aires">Buenos Aires</option>
+                                <option value="cordoba">Córdoba</option>
+                                <option value="rosario">Rosario</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="priceFilter">Precio máximo:</label>
+                            <select id="priceFilter" onchange="filterByPrice()">
+                                <option value="">Sin límite</option>
+                                <option value="1000">Hasta $1.000</option>
+                                <option value="2000">Hasta $2.000</option>
+                                <option value="3000">Hasta $3.000</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="timeFilter">Horario:</label>
+                            <select id="timeFilter" onchange="filterByTime()">
+                                <option value="">Cualquier horario</option>
+                                <option value="morning">Mañana (6-12h)</option>
+                                <option value="afternoon">Tarde (12-18h)</option>
+                                <option value="evening">Noche (18-24h)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Available Locations -->
+            <section class="locations-section">
+                <div class="locations-grid" id="locationsGrid">
+                    <!-- Location 1: Unicenter -->
+                    <div class="location-card" data-location="buenos-aires" data-price="750">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="Unicenter Shopping">
+                                <div class="location-status online">
+                                    <i class="fas fa-circle"></i>
+                                    Disponible
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('unicenter')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>Unicenter Shopping</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Paraná 3745, Martínez, Buenos Aires
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>50K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Familias ABC1</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>10:00 - 22:00</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$750</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $1.400</span>
+                                    <span class="package">60 seg: $2.500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location 2: TOM Shopping -->
+                    <div class="location-card" data-location="cordoba" data-price="500">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="TOM Shopping">
+                                <div class="location-status online">
+                                    <i class="fas fa-circle"></i>
+                                    Disponible
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('tom-shopping')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>TOM Shopping</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Av. Rafael Núñez 4000, Córdoba Capital
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>35K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Jóvenes y familias</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>09:00 - 23:00</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$500</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $950</span>
+                                    <span class="package">60 seg: $1.700</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location 3: Dot Baires -->
+                    <div class="location-card" data-location="buenos-aires" data-price="850">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="Dot Baires Shopping">
+                                <div class="location-status limited">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Limitado
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('dot-baires')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>Dot Baires Shopping</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Vedia 3626, Saavedra, Buenos Aires
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>42K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Profesionales BC1</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>10:00 - 22:00</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$850</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $1.600</span>
+                                    <span class="package">60 seg: $2.900</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location 4: Aeropuerto Ezeiza -->
+                    <div class="location-card premium" data-location="buenos-aires" data-price="1200">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="Aeropuerto Ezeiza">
+                                <div class="location-status limited">
+                                    <i class="fas fa-star"></i>
+                                    Premium
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('ezeiza')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>Aeropuerto Internacional Ezeiza</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Au. Teniente General Pablo Riccheri, Ezeiza
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>80K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Ejecutivos A+BC1</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>24/7</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$1.200</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $2.200</span>
+                                    <span class="package">60 seg: $4.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location 5: Universidad Palermo -->
+                    <div class="location-card" data-location="buenos-aires" data-price="450">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="Universidad Palermo">
+                                <div class="location-status online">
+                                    <i class="fas fa-circle"></i>
+                                    Disponible
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('up')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>Universidad Palermo</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Mario Bravo 1259, Recoleta, Buenos Aires
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>25K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Estudiantes 18-25</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>07:00 - 22:00</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$450</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $850</span>
+                                    <span class="package">60 seg: $1.500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location 6: Plaza Oeste -->
+                    <div class="location-card" data-location="buenos-aires" data-price="600">
+                        <div class="location-header">
+                            <div class="location-image">
+                                <img src="../calendario.png" alt="Plaza Oeste">
+                                <div class="location-status online">
+                                    <i class="fas fa-circle"></i>
+                                    Disponible
+                                </div>
+                            </div>
+                            <div class="location-overlay">
+                                <button class="btn-view-calendar" onclick="showCalendar('plaza-oeste')">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Ver disponibilidad
+                                </button>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            <h3>Plaza Oeste</h3>
+                            <p class="location-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Av. Cristianía 4750, Caseros, Buenos Aires
+                            </p>
+                            <div class="location-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>30K personas/día</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Familias C1C2</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>10:00 - 22:00</span>
+                                </div>
+                            </div>
+                            <div class="location-pricing">
+                                <div class="price-main">
+                                    <span class="price-amount">$600</span>
+                                    <span class="price-unit">/15 seg</span>
+                                </div>
+                                <div class="price-packages">
+                                    <span class="package">30 seg: $1.100</span>
+                                    <span class="package">60 seg: $2.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content upload-modal">
+            <div class="modal-header">
+                <h3>Crear nuevo anuncio</h3>
+                <span class="modal-close" onclick="hideUploadModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="upload-steps">
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">
+                            <span class="step-number">1</span>
+                            <span class="step-label">Archivo</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            <span class="step-number">2</span>
+                            <span class="step-label">Detalles</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            <span class="step-number">3</span>
+                            <span class="step-label">Revisión</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-content" id="step1">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h4>Arrastrá tu archivo aquí</h4>
+                            <p>o hacé clic para seleccionar</p>
+                            <input type="file" id="fileInput" accept="image/*,video/*" multiple>
+                            <div class="upload-info">
+                                <small>Formatos soportados: JPG, PNG, MP4, MOV (máx. 50MB)</small>
+                            </div>
+                        </div>
+                        <div id="filePreview" class="file-preview"></div>
+                    </div>
+                    
+                    <div class="step-content" id="step2" style="display: none;">
+                        <form id="adDetailsForm" class="ad-details-form">
+                            <div class="form-group">
+                                <label for="adTitle">Título del anuncio</label>
+                                <input type="text" id="adTitle" placeholder="Ej: Promoción especial pizza 2x1" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="adDescription">Descripción</label>
+                                <textarea id="adDescription" placeholder="Describe brevemente tu anuncio..."></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="adCategory">Categoría</label>
+                                    <select id="adCategory" required>
+                                        <option value="">Seleccioná una categoría</option>
+                                        <option value="food">Comida y bebida</option>
+                                        <option value="retail">Retail y moda</option>
+                                        <option value="services">Servicios</option>
+                                        <option value="entertainment">Entretenimiento</option>
+                                        <option value="health">Salud y bienestar</option>
+                                        <option value="tech">Tecnología</option>
+                                        <option value="other">Otro</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="targetAudience">Audiencia objetivo</label>
+                                    <select id="targetAudience">
+                                        <option value="">Todas las edades</option>
+                                        <option value="teens">Adolescentes (13-17)</option>
+                                        <option value="young-adults">Jóvenes adultos (18-25)</option>
+                                        <option value="adults">Adultos (26-40)</option>
+                                        <option value="mature">Adultos maduros (40+)</option>
+                                        <option value="families">Familias</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="step-content" id="step3" style="display: none;">
+                        <div class="review-content">
+                            <h4>Revisión de tu anuncio</h4>
+                            <div class="review-preview" id="reviewPreview">
+                                <!-- Content will be populated by JavaScript -->
+                            </div>
+                            <div class="review-info">
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Tiempo de aprobación: 24-48 horas</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Una vez aprobado, podrás reservar espacios</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Podés editar el anuncio antes de la aprobación</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+                        <i class="fas fa-chevron-left"></i>
+                        Anterior
+                    </button>
+                    <button type="button" class="btn-primary" id="nextBtn" onclick="nextStep()">
+                        Siguiente
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="customer-script.js"></script>
+    <script src="dashboard-script.js"></script>
+</body>
+</html> 
