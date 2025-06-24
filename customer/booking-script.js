@@ -55,6 +55,24 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCalendar();
     initializeDurationOptions();
     initializeMyAds();
+    
+    // Check for quick booking data from dashboard grid
+    const quickBookingData = localStorage.getItem('quickBookingData');
+    if (quickBookingData) {
+        const bookingData = JSON.parse(quickBookingData);
+        localStorage.removeItem('quickBookingData'); // Clean up
+        
+        // Pre-select the date and time slot
+        selectedDate = new Date(bookingData.date);
+        selectedTimeSlot = bookingData.timeSlot;
+        
+        // Update calendar and time slots
+        generateCalendar();
+        generateTimeSlots();
+        
+        showNotification(`Fecha y horario ${bookingData.timeSlot} pre-seleccionados desde la grilla`, 'success');
+    }
+    
     updateBookingSummary();
 });
 

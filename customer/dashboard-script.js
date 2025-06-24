@@ -474,4 +474,245 @@ const reviewStyles = `
 // Add review styles to document
 const reviewStyleSheet = document.createElement('style');
 reviewStyleSheet.textContent = reviewStyles;
-document.head.appendChild(reviewStyleSheet); 
+document.head.appendChild(reviewStyleSheet);
+
+// Availability Grid Management
+let currentGridDate = new Date();
+let currentGridLocation = 'unicenter';
+
+const locationData = {
+    'unicenter': {
+        name: 'Unicenter Shopping',
+        details: 'Martínez, Buenos Aires • Desde $750/15seg',
+        pricing: { 15: 750, 30: 1400, 60: 2500 }
+    },
+    'tom-shopping': {
+        name: 'TOM Shopping',
+        details: 'Córdoba Capital • Desde $500/15seg',
+        pricing: { 15: 500, 30: 950, 60: 1700 }
+    },
+    'dot-baires': {
+        name: 'Dot Baires',
+        details: 'Buenos Aires • Desde $600/15seg',
+        pricing: { 15: 600, 30: 1100, 60: 2000 }
+    },
+    'aeropuerto': {
+        name: 'Aeropuerto Ezeiza',
+        details: 'Buenos Aires • Desde $1.200/15seg',
+        pricing: { 15: 1200, 30: 2200, 60: 4000 }
+    },
+    'universidad': {
+        name: 'Universidad Palermo',
+        details: 'Buenos Aires • Desde $450/15seg',
+        pricing: { 15: 450, 30: 850, 60: 1500 }
+    }
+};
+
+function initializeAvailabilityGrid() {
+    generateAvailabilityGrid();
+    updateGridHeader();
+}
+
+function generateAvailabilityGrid() {
+    const gridContainer = document.getElementById('availabilityGrid');
+    if (!gridContainer) return;
+    
+    // Create time header
+    const timeHeader = document.createElement('div');
+    timeHeader.className = 'grid-time-header';
+    
+    // Empty cell for location label
+    timeHeader.appendChild(createTimeHeaderCell('', 'time-label'));
+    
+    // Hour headers (24 hours)
+    for (let hour = 0; hour < 24; hour++) {
+        const hourLabel = hour.toString().padStart(2, '0') + ':00';
+        timeHeader.appendChild(createTimeHeaderCell(hourLabel, 'hour-label'));
+    }
+    
+    // Create grid row for the location
+    const gridRow = document.createElement('div');
+    gridRow.className = 'grid-row';
+    
+    // Location label
+    const locationCell = document.createElement('div');
+    locationCell.className = 'time-label';
+    locationCell.textContent = locationData[currentGridLocation].name.split(' ')[0];
+    gridRow.appendChild(locationCell);
+    
+    // Time slots (24 hours)
+    for (let hour = 0; hour < 24; hour++) {
+        const cell = createGridCell(hour);
+        gridRow.appendChild(cell);
+    }
+    
+    gridContainer.innerHTML = '';
+    gridContainer.appendChild(timeHeader);
+    gridContainer.appendChild(gridRow);
+}
+
+function createTimeHeaderCell(text, className = '') {
+    const cell = document.createElement('div');
+    cell.className = `time-header-cell ${className}`;
+    cell.textContent = text;
+    return cell;
+}
+
+function createGridCell(hour) {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    
+    // Generate realistic availability based on location and time
+    const availability = generateRealisticAvailability(hour);
+    cell.classList.add(availability.status);
+    
+    // Add click handler for available slots
+    if (availability.status === 'available') {
+        cell.addEventListener('click', () => {
+            const timeSlot = `${hour.toString().padStart(2, '0')}:00`;
+            reserveTimeSlot(timeSlot);
+        });
+        cell.title = `Disponible - ${hour.toString().padStart(2, '0')}:00`;
+    } else {
+        cell.title = `${availability.status === 'occupied' ? 'Ocupado' : 'Reservado'} - ${hour.toString().padStart(2, '0')}:00`;
+    }
+    
+    return cell;
+}
+
+function generateRealisticAvailability(hour) {
+    // Different availability patterns based on location and time
+    const patterns = {
+        'unicenter': {
+            // Shopping mall - busy afternoons and evenings
+            peak: [14, 15, 16, 17, 18, 19, 20],
+            closed: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        'tom-shopping': {
+            peak: [12, 13, 14, 15, 16, 17, 18, 19],
+            closed: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        'aeropuerto': {
+            // Airport - busy mornings and evenings
+            peak: [6, 7, 8, 9, 18, 19, 20, 21],
+            closed: [2, 3, 4]
+        },
+        'universidad': {
+            // University - busy during class hours
+            peak: [9, 10, 11, 14, 15, 16, 17],
+            closed: [0, 1, 2, 3, 4, 5, 22, 23]
+        },
+        'dot-baires': {
+            peak: [12, 13, 14, 15, 16, 17, 18],
+            closed: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        }
+    };
+    
+    const pattern = patterns[currentGridLocation] || patterns['unicenter'];
+    
+    if (pattern.closed.includes(hour)) {
+        return { status: 'occupied' };
+    }
+    
+    if (pattern.peak.includes(hour)) {
+        // 70% chance of being occupied during peak hours
+        const rand = Math.random();
+        if (rand < 0.7) return { status: 'occupied' };
+        if (rand < 0.85) return { status: 'reserved' };
+        return { status: 'available' };
+    } else {
+        // 40% chance of being occupied during off-peak hours
+        const rand = Math.random();
+        if (rand < 0.4) return { status: 'occupied' };
+        if (rand < 0.5) return { status: 'reserved' };
+        return { status: 'available' };
+    }
+}
+
+function updateGridHeader() {
+    const locationInfo = document.getElementById('currentLocationInfo');
+    const currentDate = document.getElementById('currentGridDate');
+    
+    if (locationInfo) {
+        const location = locationData[currentGridLocation];
+        locationInfo.innerHTML = `
+            <div class="location-name">${location.name}</div>
+            <div class="location-details">${location.details}</div>
+        `;
+    }
+    
+    if (currentDate) {
+        const today = new Date();
+        const isToday = currentGridDate.toDateString() === today.toDateString();
+        const isTomorrow = currentGridDate.toDateString() === new Date(today.getTime() + 24*60*60*1000).toDateString();
+        
+        if (isToday) {
+            currentDate.textContent = 'Hoy';
+        } else if (isTomorrow) {
+            currentDate.textContent = 'Mañana';
+        } else {
+            currentDate.textContent = new Intl.DateTimeFormat('es-ES', {
+                day: 'numeric',
+                month: 'short'
+            }).format(currentGridDate);
+        }
+    }
+}
+
+function switchGridLocation() {
+    const select = document.getElementById('gridLocationSelect');
+    currentGridLocation = select.value;
+    generateAvailabilityGrid();
+    updateGridHeader();
+}
+
+function previousGridDate() {
+    const today = new Date();
+    if (currentGridDate > today) {
+        currentGridDate.setDate(currentGridDate.getDate() - 1);
+        generateAvailabilityGrid();
+        updateGridHeader();
+    }
+}
+
+function nextGridDate() {
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 30); // 30 days in advance
+    
+    if (currentGridDate < maxDate) {
+        currentGridDate.setDate(currentGridDate.getDate() + 1);
+        generateAvailabilityGrid();
+        updateGridHeader();
+    }
+}
+
+function reserveTimeSlot(timeSlot) {
+    // Store the selected slot and redirect to booking
+    const bookingData = {
+        location: currentGridLocation,
+        date: currentGridDate.toISOString(),
+        timeSlot: timeSlot
+    };
+    
+    localStorage.setItem('quickBookingData', JSON.stringify(bookingData));
+    
+    showNotification(`Redirigiendo a reservar ${timeSlot} en ${locationData[currentGridLocation].name}...`, 'success');
+    
+    setTimeout(() => {
+        window.location.href = `booking.html?location=${currentGridLocation}`;
+    }, 1000);
+}
+
+function showFullCalendar() {
+    // Redirect to booking page with current location
+    window.location.href = `booking.html?location=${currentGridLocation}`;
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuthentication();
+    loadUserData();
+    initializeFilters();
+    initializeUpload();
+    initializeAvailabilityGrid();
+}); 

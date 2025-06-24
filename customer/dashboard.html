@@ -134,6 +134,72 @@
                 </div>
             </section>
 
+            <!-- Availability Grid -->
+            <section class="availability-section">
+                <div class="availability-header">
+                    <h2>Disponibilidad en tiempo real</h2>
+                    <div class="availability-controls">
+                        <div class="location-selector">
+                            <label for="gridLocationSelect">Ver disponibilidad de:</label>
+                            <select id="gridLocationSelect" onchange="switchGridLocation()">
+                                <option value="unicenter">Unicenter Shopping</option>
+                                <option value="tom-shopping">TOM Shopping</option>
+                                <option value="dot-baires">Dot Baires</option>
+                                <option value="aeropuerto">Aeropuerto Ezeiza</option>
+                                <option value="universidad">Universidad Palermo</option>
+                            </select>
+                        </div>
+                        <div class="grid-legend">
+                            <div class="legend-item">
+                                <div class="legend-color available"></div>
+                                <span>Disponible</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color occupied"></div>
+                                <span>Ocupado</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color reserved"></div>
+                                <span>Reservado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="availability-grid-container">
+                    <div class="grid-header">
+                        <div class="current-location-info" id="currentLocationInfo">
+                            <div class="location-name">Unicenter Shopping</div>
+                            <div class="location-details">Martínez, Buenos Aires • Desde $750/15seg</div>
+                        </div>
+                        <div class="grid-date-nav">
+                            <button class="date-nav-btn" onclick="previousGridDate()">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span class="current-date" id="currentGridDate">Hoy</span>
+                            <button class="date-nav-btn" onclick="nextGridDate()">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="availability-grid" id="availabilityGrid">
+                        <!-- Grid will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="grid-footer">
+                        <div class="time-info">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Horarios en tiempo real. Clickeá en un slot disponible para reservar.</span>
+                        </div>
+                        <button class="btn-view-full-calendar" onclick="showFullCalendar()">
+                            <i class="fas fa-calendar-alt"></i>
+                            Ver calendario completo
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             <!-- Available Locations -->
             <section class="locations-section">
                 <div class="locations-grid" id="locationsGrid">
