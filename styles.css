@@ -964,6 +964,77 @@ body {
     border-top: 1px solid rgba(77, 148, 255, 0.2);
 }
 
+/* Media query para la pantalla principal (7.6 pulgadas) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .intro-title {
+        font-size: 2rem;
+    }
+    
+    .intro-description {
+        font-size: 1.2rem;
+    }
+    
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .sectors-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .demo-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .cta-title {
+        font-size: 2.5rem;
+    }
+    
+    .video-container {
+        max-width: 400px;
+    }
+    
+    .process-step, .benefit-item, .sector-item {
+        padding: 1.5rem;
+    }
+    
+    .benefit-item {
+        align-items: center;
+        text-align: center;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-toggle {
