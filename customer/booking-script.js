@@ -295,6 +295,15 @@ function updateDurationPricing() {
 
 // My Ads Management
 function initializeMyAds() {
+    // Check if coming from "Mis Anuncios" with a pre-selected ad
+    const selectedAdFromStorage = localStorage.getItem('selectedAdForBooking');
+    let preSelectedAd = null;
+    
+    if (selectedAdFromStorage) {
+        preSelectedAd = JSON.parse(selectedAdFromStorage);
+        localStorage.removeItem('selectedAdForBooking'); // Clean up
+    }
+    
     // For demo purposes, we'll use some static ads
     // In real implementation, this would come from the user's created ads
     const myAds = [
@@ -315,8 +324,24 @@ function initializeMyAds() {
             title: 'Oferta especial hamburguesas',
             type: 'image',
             status: 'approved'
+        },
+        {
+            id: 'ad5',
+            title: 'Curso de inglés online',
+            type: 'image',
+            status: 'approved'
         }
     ];
+    
+    // If there's a pre-selected ad, add it to the list if not already there
+    if (preSelectedAd && !myAds.find(ad => ad.id === preSelectedAd.id)) {
+        myAds.unshift({
+            id: preSelectedAd.id,
+            title: preSelectedAd.title,
+            type: 'image',
+            status: 'approved'
+        });
+    }
     
     const myAdsList = document.getElementById('myAdsList');
     const existingAds = myAdsList.querySelectorAll('.ad-item:not(.create-new-ad)');
@@ -328,8 +353,9 @@ function initializeMyAds() {
     const createButton = myAdsList.querySelector('.create-new-ad');
     
     myAds.forEach(ad => {
+        const isPreSelected = preSelectedAd && preSelectedAd.id === ad.id;
         const adElement = document.createElement('div');
-        adElement.className = 'ad-item';
+        adElement.className = `ad-item ${isPreSelected ? 'selected' : ''}`;
         adElement.innerHTML = `
             <div class="ad-preview">
                 <i class="fas ${ad.type === 'video' ? 'fa-video' : 'fa-image'}"></i>
@@ -338,15 +364,23 @@ function initializeMyAds() {
                 <span class="ad-title">${ad.title}</span>
                 <span class="ad-status ${ad.status}">${ad.status === 'approved' ? 'Aprobado' : 'Pendiente'}</span>
             </div>
-            <button class="btn-select-ad ${ad.status !== 'approved' ? 'disabled' : ''}" 
+            <button class="btn-select-ad ${ad.status !== 'approved' ? 'disabled' : ''} ${isPreSelected ? 'selected' : ''}" 
                     ${ad.status !== 'approved' ? 'disabled' : ''} 
                     onclick="selectAd('${ad.id}', '${ad.title}')">
-                ${ad.status === 'approved' ? 'Usar' : 'Esperando aprobación'}
+                ${isPreSelected ? 'Seleccionado' : ad.status === 'approved' ? 'Usar' : 'Esperando aprobación'}
             </button>
         `;
         
         myAdsList.insertBefore(adElement, createButton);
     });
+    
+    // Auto-select the pre-selected ad
+    if (preSelectedAd) {
+        setTimeout(() => {
+            selectAd(preSelectedAd.id, preSelectedAd.title);
+            showNotification(`Anuncio "${preSelectedAd.title}" seleccionado automáticamente`, 'success');
+        }, 500);
+    }
 }
 
 function selectAd(adId, adTitle) {

@@ -214,10 +214,11 @@ function proceedToBooking(adId) {
     // Store selected ad for booking flow
     localStorage.setItem('selectedAdForBooking', JSON.stringify(ad));
     
-    showNotification('Redirigiendo a selección de espacio...', 'success');
+    showNotification('Redirigiendo a reservar espacio...', 'success');
     
     setTimeout(() => {
-        window.location.href = 'dashboard.html';
+        // Redirect to booking page with the first location (Unicenter) as default
+        window.location.href = 'booking.html?location=unicenter';
     }, 1000);
 }
 
