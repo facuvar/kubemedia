@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kube Media Admin</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../logo-blanco.png" alt="Kube Media" class="sidebar-logo">
+            <h2>Admin Panel</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Programación</span>
+            </a>
+            <a href="clientes.html" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="aprobar.html" class="nav-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Por Aprobar</span>
+                <span class="badge">3</span>
+            </a>
+            <a href="dispositivos.html" class="nav-item">
+                <i class="fas fa-tv"></i>
+                <span>Dispositivos</span>
+            </a>
+            <a href="#" class="nav-item" onclick="downloadProgram()">
+                <i class="fas fa-download"></i>
+                <span>Descargar Programa</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Admin User</span>
+            </div>
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Programación de Anuncios</h1>
+            <div class="header-actions">
+                <div class="date-selector">
+                    <i class="fas fa-calendar"></i>
+                    <span>Hoy, 15 Enero 2025</span>
+                </div>
+                <button class="btn-refresh">
+                    <i class="fas fa-sync-alt"></i>
+                    Actualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- TV Guide Grid -->
+        <div class="tv-guide">
+            <!-- Time Header -->
+            <div class="time-header">
+                <div class="time-slot"></div> <!-- Empty corner -->
+                <div class="time-slot">09:00</div>
+                <div class="time-slot">09:30</div>
+                <div class="time-slot">10:00</div>
+                <div class="time-slot">10:30</div>
+                <div class="time-slot">11:00</div>
+                <div class="time-slot">11:30</div>
+                <div class="time-slot">12:00</div>
+                <div class="time-slot">12:30</div>
+                <div class="time-slot">13:00</div>
+                <div class="time-slot">13:30</div>
+                <div class="time-slot">14:00</div>
+            </div>
+
+            <!-- Locations and Programs -->
+            <div class="channel-row">
+                <div class="channel-info">
+                    <div class="channel-logo unicenter">UC</div>
+                    <div class="channel-name">
+                        <strong>Unicenter</strong>
+                        <span>Pantalla 122</span>
+                    </div>
+                </div>
+                <div class="program-grid">
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">09:00</div>
+                        <div class="program-title">McDonald's - Combo Big Mac</div>
+                        <div class="program-client">Cliente: McDonald's</div>
+                    </div>
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">10:00</div>
+                        <div class="program-title">Adidas - Zapatillas</div>
+                        <div class="program-client">Cliente: Adidas Store</div>
+                    </div>
+                    <div class="program" style="grid-column: span 3;">
+                        <div class="program-time">10:30</div>
+                        <div class="program-title">Samsung Galaxy S24 - Preventa</div>
+                        <div class="program-client">Cliente: Samsung Argentina</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">12:30</div>
+                        <div class="program-title">Starbucks - Promoción Café</div>
+                        <div class="program-client">Cliente: Starbucks</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="channel-row">
+                <div class="channel-info">
+                    <div class="channel-logo tom">TM</div>
+                    <div class="channel-name">
+                        <strong>TOM Shopping</strong>
+                        <span>Pantalla 145</span>
+                    </div>
+                </div>
+                <div class="program-grid">
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">09:00</div>
+                        <div class="program-title">H&M - Nueva colección</div>
+                        <div class="program-client">Cliente: H&M</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">09:30</div>
+                        <div class="program-title">Coca Cola - Sabor Original</div>
+                        <div class="program-client">Cliente: Coca Cola</div>
+                    </div>
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">11:00</div>
+                        <div class="program-title">Apple iPhone 15</div>
+                        <div class="program-client">Cliente: iStore</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">11:30</div>
+                        <div class="program-title">Zara - Sale 50% OFF</div>
+                        <div class="program-client">Cliente: Zara</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="channel-row">
+                <div class="channel-info">
+                    <div class="channel-logo dot">DT</div>
+                    <div class="channel-name">
+                        <strong>Dot Baires</strong>
+                        <span>Pantalla 089</span>
+                    </div>
+                </div>
+                <div class="program-grid">
+                    <div class="program" style="grid-column: span 3;">
+                        <div class="program-time">09:00</div>
+                        <div class="program-title">Nike - Just Do It Campaign</div>
+                        <div class="program-client">Cliente: Nike Store</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">10:30</div>
+                        <div class="program-title">Burger King - Whopper</div>
+                        <div class="program-client">Cliente: Burger King</div>
+                    </div>
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">12:00</div>
+                        <div class="program-title">Sony PlayStation 5</div>
+                        <div class="program-client">Cliente: Sony</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="channel-row">
+                <div class="channel-info">
+                    <div class="channel-logo aeropuerto">AE</div>
+                    <div class="channel-name">
+                        <strong>Aeropuerto Ezeiza</strong>
+                        <span>Pantalla 201</span>
+                    </div>
+                </div>
+                <div class="program-grid">
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">09:00</div>
+                        <div class="program-title">Mastercard - Sin fronteras</div>
+                        <div class="program-client">Cliente: Mastercard</div>
+                    </div>
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">10:00</div>
+                        <div class="program-title">Duty Free Shop</div>
+                        <div class="program-client">Cliente: DFS</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">10:30</div>
+                        <div class="program-title">Aerolíneas Argentinas</div>
+                        <div class="program-client">Cliente: Aerolíneas</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="channel-row">
+                <div class="channel-info">
+                    <div class="channel-logo universidad">UN</div>
+                    <div class="channel-name">
+                        <strong>Universidad de Palermo</strong>
+                        <span>Pantalla 078</span>
+                    </div>
+                </div>
+                <div class="program-grid">
+                    <div class="program" style="grid-column: span 1;">
+                        <div class="program-time">09:00</div>
+                        <div class="program-title">Spotify Premium</div>
+                        <div class="program-client">Cliente: Spotify</div>
+                    </div>
+                    <div class="program" style="grid-column: span 2;">
+                        <div class="program-time">09:30</div>
+                        <div class="program-title">Netflix - Series Originales</div>
+                        <div class="program-client">Cliente: Netflix</div>
+                    </div>
+                    <div class="program" style="grid-column: span 3;">
+                        <div class="program-time">11:00</div>
+                        <div class="program-title">Microsoft Office 365 - Estudiantes</div>
+                        <div class="program-client">Cliente: Microsoft</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html> 

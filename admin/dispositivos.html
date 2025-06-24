@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispositivos - Kube Media Admin</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../logo-blanco.png" alt="Kube Media" class="sidebar-logo">
+            <h2>Admin Panel</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Programación</span>
+            </a>
+            <a href="clientes.html" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="aprobar.html" class="nav-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Por Aprobar</span>
+                <span class="badge">3</span>
+            </a>
+            <a href="dispositivos.html" class="nav-item active">
+                <i class="fas fa-tv"></i>
+                <span>Dispositivos</span>
+            </a>
+            <a href="#" class="nav-item" onclick="downloadProgram()">
+                <i class="fas fa-download"></i>
+                <span>Descargar Programa</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Admin User</span>
+            </div>
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Gestión de Dispositivos</h1>
+            <div class="header-actions">
+                <button class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Agregar Dispositivo
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon online">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>8</h3>
+                    <p>En línea</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon offline">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>2</h3>
+                    <p>Desconectados</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon maintenance">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>1</h3>
+                    <p>Mantenimiento</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>11</h3>
+                    <p>Total</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Devices Grid -->
+        <div class="devices-grid">
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status online">
+                        <i class="fas fa-circle"></i>
+                        En línea
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>Unicenter - Pantalla 122</h3>
+                    <p>Shopping Unicenter - Planta Baja</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 55" 4K</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Zona A1</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Ocupación hoy</span>
+                        <span class="metric-value">85%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Ingresos</span>
+                        <span class="metric-value">$12.450</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status online">
+                        <i class="fas fa-circle"></i>
+                        En línea
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>TOM Shopping - Pantalla 145</h3>
+                    <p>TOM Shopping - Primer Piso</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 65" 4K</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Zona B2</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Ocupación hoy</span>
+                        <span class="metric-value">92%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Ingresos</span>
+                        <span class="metric-value">$18.320</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status online">
+                        <i class="fas fa-circle"></i>
+                        En línea
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>Dot Baires - Pantalla 089</h3>
+                    <p>Dot Baires Shopping - Food Court</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 49" Full HD</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Zona C1</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Ocupación hoy</span>
+                        <span class="metric-value">76%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Ingresos</span>
+                        <span class="metric-value">$9.680</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status online">
+                        <i class="fas fa-circle"></i>
+                        En línea
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>Aeropuerto Ezeiza - Pantalla 201</h3>
+                    <p>Terminal A - Sala de Embarque</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 75" 4K</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Gate 12</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Ocupación hoy</span>
+                        <span class="metric-value">68%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Ingresos</span>
+                        <span class="metric-value">$15.240</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status offline">
+                        <i class="fas fa-circle"></i>
+                        Desconectado
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>Universidad Palermo - Pantalla 078</h3>
+                    <p>Campus Palermo - Hall Principal</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 43" Full HD</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Edificio A</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Último contacto</span>
+                        <span class="metric-value">Hace 2h</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Estado</span>
+                        <span class="metric-value error">Error conexión</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="device-card">
+                <div class="device-header">
+                    <div class="device-status maintenance">
+                        <i class="fas fa-tools"></i>
+                        Mantenimiento
+                    </div>
+                    <div class="device-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <h3>Estación Retiro - Pantalla 034</h3>
+                    <p>Terminal de Buses - Hall Central</p>
+                    <div class="device-specs">
+                        <span><i class="fas fa-tv"></i> 55" 4K</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Sector B</span>
+                    </div>
+                </div>
+                <div class="device-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Inicio mantenim.</span>
+                        <span class="metric-value">10:30</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Finaliza</span>
+                        <span class="metric-value">16:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html> 

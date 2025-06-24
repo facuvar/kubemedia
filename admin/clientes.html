@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - Kube Media Admin</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../logo-blanco.png" alt="Kube Media" class="sidebar-logo">
+            <h2>Admin Panel</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Programación</span>
+            </a>
+            <a href="clientes.html" class="nav-item active">
+                <i class="fas fa-user-friends"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="aprobar.html" class="nav-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Por Aprobar</span>
+                <span class="badge">3</span>
+            </a>
+            <a href="dispositivos.html" class="nav-item">
+                <i class="fas fa-tv"></i>
+                <span>Dispositivos</span>
+            </a>
+            <a href="#" class="nav-item" onclick="downloadProgram()">
+                <i class="fas fa-download"></i>
+                <span>Descargar Programa</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Admin User</span>
+            </div>
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Gestión de Clientes</h1>
+            <div class="header-actions">
+                <button class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Nuevo Cliente
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar clientes...">
+            </div>
+            <select class="filter-select">
+                <option>Todos los estados</option>
+                <option>Activos</option>
+                <option>Inactivos</option>
+                <option>Pendientes</option>
+            </select>
+        </div>
+
+        <!-- Clients Table -->
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Anuncios Activos</th>
+                        <th>Total Gastado</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">MC</div>
+                                <div>
+                                    <strong>McDonald's Argentina</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>marketing@mcdonalds.com.ar</td>
+                        <td>+54 11 4567-8900</td>
+                        <td><span class="count-badge">12</span></td>
+                        <td>$45.680</td>
+                        <td><span class="status active">Activo</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">SA</div>
+                                <div>
+                                    <strong>Samsung Argentina</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>publicidad@samsung.com.ar</td>
+                        <td>+54 11 5234-6789</td>
+                        <td><span class="count-badge">8</span></td>
+                        <td>$67.200</td>
+                        <td><span class="status active">Activo</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">HM</div>
+                                <div>
+                                    <strong>H&M</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>marketing@hm.com</td>
+                        <td>+54 11 6789-1234</td>
+                        <td><span class="count-badge">5</span></td>
+                        <td>$23.450</td>
+                        <td><span class="status active">Activo</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">AD</div>
+                                <div>
+                                    <strong>Adidas Store</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>ads@adidas.com.ar</td>
+                        <td>+54 11 3456-7890</td>
+                        <td><span class="count-badge">3</span></td>
+                        <td>$15.670</td>
+                        <td><span class="status pending">Pendiente</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">SB</div>
+                                <div>
+                                    <strong>Starbucks</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>marketing@starbucks.com.ar</td>
+                        <td>+54 11 7890-1234</td>
+                        <td><span class="count-badge">6</span></td>
+                        <td>$31.200</td>
+                        <td><span class="status active">Activo</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="client-info">
+                                <div class="client-avatar">NK</div>
+                                <div>
+                                    <strong>Nike Store</strong>
+                                    <span>Empresa</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>digital@nike.com.ar</td>
+                        <td>+54 11 2345-6789</td>
+                        <td><span class="count-badge">0</span></td>
+                        <td>$0</td>
+                        <td><span class="status inactive">Inactivo</span></td>
+                        <td>
+                            <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="btn-page active">1</button>
+            <button class="btn-page">2</button>
+            <button class="btn-page">3</button>
+            <span>...</span>
+            <button class="btn-page">12</button>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html> 

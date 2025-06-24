@@ -964,6 +964,23 @@ body {
     border-top: 1px solid rgba(77, 148, 255, 0.2);
 }
 
+.footer-agency {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.agency-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.agency-link:hover {
+    color: rgba(255, 255, 255, 1);
+    text-decoration: underline;
+}
+
 /* Media query para la pantalla principal (7.6 pulgadas) */
 @media (min-width: 601px) and (max-width: 1024px) {
     .hero-content {

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuncios por Aprobar - Kube Media Admin</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../logo-blanco.png" alt="Kube Media" class="sidebar-logo">
+            <h2>Admin Panel</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Programación</span>
+            </a>
+            <a href="clientes.html" class="nav-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="aprobar.html" class="nav-item active">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Por Aprobar</span>
+                <span class="badge">3</span>
+            </a>
+            <a href="dispositivos.html" class="nav-item">
+                <i class="fas fa-tv"></i>
+                <span>Dispositivos</span>
+            </a>
+            <a href="#" class="nav-item" onclick="downloadProgram()">
+                <i class="fas fa-download"></i>
+                <span>Descargar Programa</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Admin User</span>
+            </div>
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Anuncios por Aprobar</h1>
+            <div class="header-actions">
+                <div class="stats">
+                    <span class="stat-item">
+                        <strong>3</strong> Pendientes
+                    </span>
+                    <span class="stat-item">
+                        <strong>12</strong> Aprobados hoy
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approval Queue -->
+        <div class="approval-grid">
+            <div class="approval-card">
+                <div class="card-header">
+                    <div class="client-info">
+                        <div class="client-avatar">BK</div>
+                        <div>
+                            <strong>Burger King</strong>
+                            <span>Hace 2 horas</span>
+                        </div>
+                    </div>
+                    <span class="priority urgent">Urgente</span>
+                </div>
+                
+                <div class="ad-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-image"></i>
+                        <p>whopper_promotion.jpg</p>
+                    </div>
+                    <div class="ad-details">
+                        <h3>Whopper Doble con Queso</h3>
+                        <p>Promoción especial 2x1 en Whoppers</p>
+                        <div class="scheduling">
+                            <span><i class="fas fa-map-marker-alt"></i> Unicenter - Pantalla 122</span>
+                            <span><i class="fas fa-calendar"></i> 16 Enero, 14:00-14:30</span>
+                            <span><i class="fas fa-dollar-sign"></i> $2.500</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="btn-reject">
+                        <i class="fas fa-times"></i>
+                        Rechazar
+                    </button>
+                    <button class="btn-approve">
+                        <i class="fas fa-check"></i>
+                        Aprobar
+                    </button>
+                </div>
+            </div>
+
+            <div class="approval-card">
+                <div class="card-header">
+                    <div class="client-info">
+                        <div class="client-avatar">TC</div>
+                        <div>
+                            <strong>Tienda Claro</strong>
+                            <span>Hace 4 horas</span>
+                        </div>
+                    </div>
+                    <span class="priority normal">Normal</span>
+                </div>
+                
+                <div class="ad-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-play"></i>
+                        <p>iphone_15_promo.mp4</p>
+                    </div>
+                    <div class="ad-details">
+                        <h3>iPhone 15 Pro - Preventa</h3>
+                        <p>Nuevo iPhone 15 Pro disponible en Claro</p>
+                        <div class="scheduling">
+                            <span><i class="fas fa-map-marker-alt"></i> TOM Shopping - Pantalla 145</span>
+                            <span><i class="fas fa-calendar"></i> 17 Enero, 10:00-10:30</span>
+                            <span><i class="fas fa-dollar-sign"></i> $3.200</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="btn-reject">
+                        <i class="fas fa-times"></i>
+                        Rechazar
+                    </button>
+                    <button class="btn-approve">
+                        <i class="fas fa-check"></i>
+                        Aprobar
+                    </button>
+                </div>
+            </div>
+
+            <div class="approval-card">
+                <div class="card-header">
+                    <div class="client-info">
+                        <div class="client-avatar">LO</div>
+                        <div>
+                            <strong>L'Oréal Paris</strong>
+                            <span>Hace 6 horas</span>
+                        </div>
+                    </div>
+                    <span class="priority low">Baja</span>
+                </div>
+                
+                <div class="ad-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-image"></i>
+                        <p>mascara_voluminous.jpg</p>
+                    </div>
+                    <div class="ad-details">
+                        <h3>Máscara Voluminous Lash</h3>
+                        <p>Nueva máscara para pestañas voluminosas</p>
+                        <div class="scheduling">
+                            <span><i class="fas fa-map-marker-alt"></i> Dot Baires - Pantalla 089</span>
+                            <span><i class="fas fa-calendar"></i> 18 Enero, 15:30-16:00</span>
+                            <span><i class="fas fa-dollar-sign"></i> $1.800</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="btn-reject">
+                        <i class="fas fa-times"></i>
+                        Rechazar
+                    </button>
+                    <button class="btn-approve">
+                        <i class="fas fa-check"></i>
+                        Aprobar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recently Approved -->
+        <div class="section-header">
+            <h2>Aprobados Recientemente</h2>
+        </div>
+        
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Anuncio</th>
+                        <th>Pantalla</th>
+                        <th>Horario</th>
+                        <th>Aprobado por</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>McDonald's</td>
+                        <td>Big Mac Combo</td>
+                        <td>Unicenter - 122</td>
+                        <td>15 Ene, 12:30</td>
+                        <td>Admin User</td>
+                        <td><span class="status scheduled">Programado</span></td>
+                    </tr>
+                    <tr>
+                        <td>Samsung</td>
+                        <td>Galaxy S24 Ultra</td>
+                        <td>TOM Shopping - 145</td>
+                        <td>15 Ene, 11:00</td>
+                        <td>Admin User</td>
+                        <td><span class="status live">En aire</span></td>
+                    </tr>
+                    <tr>
+                        <td>Adidas</td>
+                        <td>Zapatillas Ultraboost</td>
+                        <td>Aeropuerto - 201</td>
+                        <td>15 Ene, 09:30</td>
+                        <td>Admin User</td>
+                        <td><span class="status completed">Finalizado</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html> 
