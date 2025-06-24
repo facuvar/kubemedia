@@ -568,6 +568,23 @@ body {
 .form-group select option {
     background: var(--background-dark);
     color: var(--text-white);
+    padding: 0.5rem;
+}
+
+/* Fix for select options visibility in different browsers */
+.form-group select {
+    color-scheme: dark;
+}
+
+.form-group select option {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
+/* Webkit specific fixes */
+.form-group select::-webkit-select-option {
+    background-color: #1e293b;
+    color: #ffffff;
 }
 
 .checkbox-group {

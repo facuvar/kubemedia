@@ -599,6 +599,23 @@
     background: var(--primary-blue);
 }
 
+/* Fix for select options visibility in booking page */
+select {
+    color-scheme: dark;
+}
+
+select option {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Webkit specific fixes */
+select::-webkit-select-option {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
 /* Custom Scrollbar for time slots */
 .time-slots-grid::-webkit-scrollbar {
     width: 6px;

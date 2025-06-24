@@ -255,6 +255,23 @@
     border-color: var(--accent-blue);
 }
 
+/* Fix for filter select options visibility */
+.filter-group select {
+    color-scheme: dark;
+}
+
+.filter-group select option {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Webkit specific fixes for filter selects */
+.filter-group select::-webkit-select-option {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
 /* Locations Grid */
 .locations-grid {
     display: grid;
@@ -656,6 +673,23 @@
     outline: none;
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.1);
+}
+
+/* Fix for modal form select options visibility */
+.ad-details-form select {
+    color-scheme: dark;
+}
+
+.ad-details-form select option {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Webkit specific fixes for modal selects */
+.ad-details-form select::-webkit-select-option {
+    background-color: #1e293b;
+    color: #ffffff;
 }
 
 /* Review Content */
