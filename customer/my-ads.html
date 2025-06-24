@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Anuncios - Kube Anuncios Digitales</title>
+    <link rel="stylesheet" href="customer-styles.css">
+    <link rel="stylesheet" href="my-ads-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="my-ads-page">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <button class="btn-back" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                        Volver al dashboard
+                    </button>
+                    <div class="page-title">
+                        <h1>Mis Anuncios</h1>
+                        <p>Gestiona todos tus anuncios desde aquí</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn-create-new" onclick="window.location.href='dashboard.html'">
+                        <i class="fas fa-plus"></i>
+                        Crear nuevo anuncio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="my-ads-main">
+        <div class="container">
+            <!-- Stats Overview -->
+            <section class="ads-stats">
+                <div class="stat-card">
+                    <div class="stat-icon approved">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="approvedCount">4</h3>
+                        <p>Aprobados</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingCount">2</h3>
+                        <p>Pendientes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon rejected">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="rejectedCount">1</h3>
+                        <p>Rechazados</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon published">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="publishedCount">3</h3>
+                        <p>Publicados</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Tabs -->
+            <section class="filter-tabs">
+                <button class="tab-button active" onclick="filterAds('all')" data-filter="all">
+                    <i class="fas fa-list"></i>
+                    Todos
+                </button>
+                <button class="tab-button" onclick="filterAds('approved')" data-filter="approved">
+                    <i class="fas fa-check-circle"></i>
+                    Aprobados
+                </button>
+                <button class="tab-button" onclick="filterAds('pending')" data-filter="pending">
+                    <i class="fas fa-clock"></i>
+                    Pendientes
+                </button>
+                <button class="tab-button" onclick="filterAds('rejected')" data-filter="rejected">
+                    <i class="fas fa-times-circle"></i>
+                    Rechazados
+                </button>
+                <button class="tab-button" onclick="filterAds('published')" data-filter="published">
+                    <i class="fas fa-play-circle"></i>
+                    Publicados
+                </button>
+            </section>
+
+            <!-- Ads Grid -->
+            <section class="ads-grid" id="adsGrid">
+                <!-- Ad Card 1: Approved -->
+                <div class="ad-card" data-status="approved">
+                    <div class="ad-preview">
+                        <img src="../cafe-martinez.jpg" alt="Promoción Pizza 2x1" class="ad-image">
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad1')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Promoción Pizza 2x1</h3>
+                            <div class="ad-status approved">
+                                <i class="fas fa-check-circle"></i>
+                                Aprobado
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-utensils"></i>
+                                Comida y bebida
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Creado: 15 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Promoción especial de pizzas 2x1 todos los martes y miércoles. Válida para pizzas medianas y grandes.
+                        </div>
+                        <div class="ad-actions">
+                            <button class="btn-primary" onclick="proceedToBooking('ad1')">
+                                <i class="fas fa-calendar-plus"></i>
+                                Reservar espacio
+                            </button>
+                            <button class="btn-secondary" onclick="editAd('ad1')">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Card 2: Pending -->
+                <div class="ad-card" data-status="pending">
+                    <div class="ad-preview">
+                        <div class="ad-placeholder video">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad2')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Video institucional restaurante</h3>
+                            <div class="ad-status pending">
+                                <i class="fas fa-clock"></i>
+                                Pendiente de aprobación
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-utensils"></i>
+                                Comida y bebida
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Enviado: 20 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Video promocional mostrando el ambiente y especialidades del restaurante.
+                        </div>
+                        <div class="ad-actions">
+                            <div class="approval-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Tiempo estimado: 24-48 horas</span>
+                            </div>
+                            <button class="btn-secondary" onclick="editAd('ad2')">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Card 3: Rejected -->
+                <div class="ad-card" data-status="rejected">
+                    <div class="ad-preview">
+                        <img src="../whooper.jpg" alt="Oferta hamburguesas" class="ad-image">
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad3')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Oferta especial hamburguesas</h3>
+                            <div class="ad-status rejected">
+                                <i class="fas fa-times-circle"></i>
+                                Rechazado
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-utensils"></i>
+                                Comida y bebida
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Revisado: 18 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Promoción de hamburguesas con descuento especial para el fin de semana.
+                        </div>
+                        <div class="rejection-reason">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>Motivo del rechazo:</strong> La imagen no cumple con la resolución mínima requerida (1920x1080px).
+                        </div>
+                        <div class="ad-actions">
+                            <button class="btn-primary" onclick="resubmitAd('ad3')">
+                                <i class="fas fa-redo"></i>
+                                Reenviar corregido
+                            </button>
+                            <button class="btn-secondary" onclick="editAd('ad3')">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Card 4: Published -->
+                <div class="ad-card" data-status="published">
+                    <div class="ad-preview">
+                        <img src="../image-scanning.png" alt="Descuento tecnología" class="ad-image">
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad4')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="live-indicator">
+                            <i class="fas fa-circle"></i>
+                            EN VIVO
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Descuento en tecnología</h3>
+                            <div class="ad-status published">
+                                <i class="fas fa-play-circle"></i>
+                                Publicado
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-laptop"></i>
+                                Tecnología
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Publicado: 10 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Descuentos especiales en smartphones, laptops y accesorios tecnológicos.
+                        </div>
+                        <div class="publishing-info">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Unicenter Shopping</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-eye"></i>
+                                <span>1,247 visualizaciones</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Finaliza: 25 Jan 2025</span>
+                            </div>
+                        </div>
+                        <div class="ad-actions">
+                            <button class="btn-secondary" onclick="viewStats('ad4')">
+                                <i class="fas fa-chart-line"></i>
+                                Ver estadísticas
+                            </button>
+                            <button class="btn-primary" onclick="extendCampaign('ad4')">
+                                <i class="fas fa-plus-circle"></i>
+                                Extender campaña
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Card 5: Approved (Ready for payment) -->
+                <div class="ad-card" data-status="approved">
+                    <div class="ad-preview">
+                        <div class="ad-placeholder image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad5')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Curso de inglés online</h3>
+                            <div class="ad-status approved">
+                                <i class="fas fa-check-circle"></i>
+                                Aprobado
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-graduation-cap"></i>
+                                Educación
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Aprobado: 22 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Clases de inglés online con profesores nativos. Primera clase gratis.
+                        </div>
+                        <div class="ready-for-payment">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Listo para reservar espacio y proceder al pago</span>
+                        </div>
+                        <div class="ad-actions">
+                            <button class="btn-primary" onclick="proceedToBooking('ad5')">
+                                <i class="fas fa-calendar-plus"></i>
+                                Reservar espacio
+                            </button>
+                            <button class="btn-secondary" onclick="editAd('ad5')">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ad Card 6: Pending -->
+                <div class="ad-card" data-status="pending">
+                    <div class="ad-preview">
+                        <div class="ad-placeholder image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="ad-overlay">
+                            <button class="btn-preview" onclick="previewAd('ad6')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-header">
+                            <h3>Spa y relajación</h3>
+                            <div class="ad-status pending">
+                                <i class="fas fa-clock"></i>
+                                Pendiente de aprobación
+                            </div>
+                        </div>
+                        <div class="ad-meta">
+                            <span class="ad-category">
+                                <i class="fas fa-spa"></i>
+                                Salud y bienestar
+                            </span>
+                            <span class="ad-date">
+                                <i class="fas fa-calendar"></i>
+                                Enviado: 23 Jan 2025
+                            </span>
+                        </div>
+                        <div class="ad-description">
+                            Tratamientos de spa y masajes relajantes con descuentos especiales.
+                        </div>
+                        <div class="ad-actions">
+                            <div class="approval-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>En revisión - Tiempo estimado: 12-24 horas</span>
+                            </div>
+                            <button class="btn-secondary" onclick="editAd('ad6')">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-ad"></i>
+                </div>
+                <h3>No hay anuncios en esta categoría</h3>
+                <p>Creá tu primer anuncio para empezar a llegar a más clientes</p>
+                <button class="btn-create-first" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-plus"></i>
+                    Crear mi primer anuncio
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content preview-modal">
+            <div class="modal-header">
+                <h3>Vista previa del anuncio</h3>
+                <span class="modal-close" onclick="hidePreviewModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="preview-container" id="previewContainer">
+                    <!-- Preview content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="customer-script.js"></script>
+    <script src="my-ads-script.js"></script>
+</body>
+</html> 

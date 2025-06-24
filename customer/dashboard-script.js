@@ -50,7 +50,7 @@ function showProfile() {
 }
 
 function showMyAds() {
-    showNotification('Vista de mis anuncios próximamente disponible', 'info');
+    window.location.href = 'my-ads.html';
     toggleUserMenu();
 }
 
@@ -414,7 +414,12 @@ function submitAd() {
         localStorage.setItem('customerAds', JSON.stringify(existingAds));
         
         hideUploadModal();
-        showNotification('¡Anuncio enviado para aprobación! Te notificaremos cuando esté listo.', 'success');
+        showNotification('¡Anuncio enviado para aprobación! Te llevamos a "Mis Anuncios" para que puedas seguir el estado.', 'success');
+        
+        // Redirect to My Ads page after 2 seconds
+        setTimeout(() => {
+            window.location.href = 'my-ads.html#uploaded';
+        }, 2000);
         
         // Reset button
         submitBtn.disabled = false;
