@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (buttonText.includes('demo') || buttonText.includes('Demo')) {
                 showDemoModal();
             } else if (buttonText.includes('Hablemos')) {
-                window.open('https://wa.me/5491123456789?text=Hola! Me interesa conocer más sobre Kube para Brand Plus', '_blank');
+                window.open('https://wa.me/5491151109844?text=Hola! Me interesa conocer más sobre Kube para Brand Plus', '_blank');
             }
         });
     });
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const text = this.textContent.toLowerCase();
             
             if (text.includes('whatsapp')) {
-                window.open('https://wa.me/5491123456789?text=Hola! Me interesa conocer más sobre Kube', '_blank');
+                window.open('https://wa.me/5491151109844?text=Hola! Me interesa conocer más sobre Kube', '_blank');
             } else if (text.includes('contacto@kube.com')) {
                 window.open('mailto:contacto@kube.com?subject=Consulta sobre Kube&body=Hola, me interesa conocer más sobre la solución Kube para Brand Plus.', '_blank');
             }
@@ -228,7 +228,7 @@ function closeModal() {
 }
 
 function contactWhatsApp() {
-    window.open('https://wa.me/5491123456789?text=Hola! Me interesa solicitar una demo de Kube para Brand Plus', '_blank');
+    window.open('https://wa.me/5491151109844?text=Hola! Me interesa solicitar una demo de Kube para Brand Plus', '_blank');
     closeModal();
 }
 
