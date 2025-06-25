@@ -69,7 +69,7 @@
 
         <!-- Approval Queue -->
         <div class="approval-grid">
-            <div class="approval-card">
+            <div class="approval-card" data-ad-id="ad-001">
                 <div class="card-header">
                     <div class="client-info">
                         <div class="client-avatar">BK</div>
@@ -98,18 +98,18 @@
                 </div>
                 
                 <div class="card-actions">
-                    <button class="btn-reject">
+                    <button class="btn-reject" onclick="rejectAd('ad-001')">
                         <i class="fas fa-times"></i>
                         Rechazar
                     </button>
-                    <button class="btn-approve">
+                    <button class="btn-approve" onclick="approveAd('ad-001')">
                         <i class="fas fa-check"></i>
                         Aprobar
                     </button>
                 </div>
             </div>
 
-            <div class="approval-card">
+            <div class="approval-card" data-ad-id="ad-002">
                 <div class="card-header">
                     <div class="client-info">
                         <div class="client-avatar">TC</div>
@@ -138,18 +138,18 @@
                 </div>
                 
                 <div class="card-actions">
-                    <button class="btn-reject">
+                    <button class="btn-reject" onclick="rejectAd('ad-002')">
                         <i class="fas fa-times"></i>
                         Rechazar
                     </button>
-                    <button class="btn-approve">
+                    <button class="btn-approve" onclick="approveAd('ad-002')">
                         <i class="fas fa-check"></i>
                         Aprobar
                     </button>
                 </div>
             </div>
 
-            <div class="approval-card">
+            <div class="approval-card" data-ad-id="ad-003">
                 <div class="card-header">
                     <div class="client-info">
                         <div class="client-avatar">LO</div>
@@ -178,11 +178,55 @@
                 </div>
                 
                 <div class="card-actions">
-                    <button class="btn-reject">
+                    <button class="btn-reject" onclick="rejectAd('ad-003')">
                         <i class="fas fa-times"></i>
                         Rechazar
                     </button>
-                    <button class="btn-approve">
+                    <button class="btn-approve" onclick="approveAd('ad-003')">
+                        <i class="fas fa-check"></i>
+                        Aprobar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ejemplo de anuncio personal -->
+            <div class="approval-card" data-ad-id="ad-004" style="border: 2px dashed #ff6b9d;">
+                <div class="card-header">
+                    <div class="client-info">
+                        <div class="client-avatar" style="background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);">❤️</div>
+                        <div>
+                            <strong>Martín López</strong>
+                            <span>Hace 1 hora</span>
+                        </div>
+                    </div>
+                    <span class="priority normal" style="background: #ff6b9d;">Personal</span>
+                </div>
+                
+                <div class="ad-preview">
+                    <div class="preview-placeholder" style="background: linear-gradient(135deg, #ffe8e8 0%, #fff0f0 100%);">
+                        <i class="fas fa-heart" style="color: #ff6b9d;"></i>
+                        <p style="color: #c44569; font-weight: 600;">anuncio_propuesta.jpg</p>
+                    </div>
+                    <div class="ad-details">
+                        <h3 style="color: #c44569;">¿Te querés casar conmigo?</h3>
+                        <p>Un momento especial para una persona especial</p>
+                        <div class="scheduling">
+                            <span><i class="fas fa-map-marker-alt"></i> Unicenter - Pantalla 122</span>
+                            <span><i class="fas fa-calendar"></i> 17 Enero, 18:00-18:15</span>
+                            <span><i class="fas fa-dollar-sign"></i> $1.200</span>
+                        </div>
+                        <div style="margin-top: 10px; padding: 8px; background: #fff0f0; border-radius: 6px; border-left: 3px solid #ff6b9d;">
+                            <small style="color: #c44569;"><strong>Push:</strong> "¡Hay un mensaje especial esperándote en la pantalla!"</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="btn-reject" onclick="rejectAd('ad-004')">
+                        <i class="fas fa-times"></i>
+                        Rechazar
+                    </button>
+                    <button class="btn-approve" onclick="approveAd('ad-004')">
                         <i class="fas fa-check"></i>
                         Aprobar
                     </button>

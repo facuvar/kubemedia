@@ -708,6 +708,268 @@ function showFullCalendar() {
     window.location.href = `booking.html?location=${currentGridLocation}`;
 }
 
+// Category change handler
+document.getElementById('adCategory').addEventListener('change', function() {
+    const category = this.value;
+    console.log('Category changed to:', category);
+    
+    // Show/hide personal ads section
+    const personalAdsSection = document.getElementById('personalAdsSection');
+    if (category === 'personal') {
+        personalAdsSection.style.display = 'block';
+    } else {
+        personalAdsSection.style.display = 'none';
+    }
+});
+
+// AI Assistant Functions
+let currentAISuggestions = null;
+
+function analyzeTitle() {
+    const title = document.getElementById('adTitle').value;
+    if (!title.trim()) {
+        showNotification('Por favor ingresá un título para analizar', 'warning');
+        return;
+    }
+    
+    showAIAnalysis('title', title);
+}
+
+function analyzeDescription() {
+    const description = document.getElementById('adDescription').value;
+    if (!description.trim()) {
+        showNotification('Por favor ingresá una descripción para analizar', 'warning');
+        return;
+    }
+    
+    showAIAnalysis('description', description);
+}
+
+function showAIAnalysis(type, content) {
+    const panel = document.getElementById('aiAssistantPanel');
+    const aiContent = document.getElementById('aiContent');
+    
+    // Show loading state
+    aiContent.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea; margin-bottom: 10px;"></i>
+            <p>Analizando tu ${type === 'title' ? 'título' : 'descripción'} con IA...</p>
+        </div>
+    `;
+    
+    panel.style.display = 'block';
+    
+    // Simulate AI analysis
+    setTimeout(() => {
+        const suggestions = generateAISuggestions(type, content);
+        displayAISuggestions(suggestions);
+        currentAISuggestions = suggestions;
+    }, 2000);
+}
+
+function generateAISuggestions(type, content) {
+    const suggestions = [];
+    
+    if (type === 'title') {
+        // Analyze title
+        const titleLength = content.length;
+        const hasEmoji = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]/u.test(content);
+        const hasNumbers = /\d/.test(content);
+        const hasExclamation = /[!¡]/.test(content);
+        
+        let score = 60;
+        let improvements = [];
+        
+        if (titleLength < 30) {
+            score -= 10;
+            improvements.push('Considerá agregar más detalles específicos');
+        }
+        if (titleLength > 60) {
+            score -= 15;
+            improvements.push('Acortá el título para mayor impacto');
+        }
+        if (!hasEmoji) {
+            score -= 5;
+            improvements.push('Agregá un emoji para llamar la atención');
+        }
+        if (!hasNumbers && content.includes('promoción')) {
+            score -= 10;
+            improvements.push('Incluí números específicos (ej: 50% OFF, 2x1)');
+        }
+        if (!hasExclamation) {
+            score -= 5;
+            improvements.push('Agregá signos de exclamación para más energía');
+        }
+        
+        // Generate improved title
+        let improvedTitle = content;
+        if (!hasEmoji && content.includes('pizza')) {
+            improvedTitle = '🍕 ' + improvedTitle;
+        }
+        if (!hasEmoji && content.includes('promoción')) {
+            improvedTitle = '🔥 ' + improvedTitle;
+        }
+        if (!hasExclamation) {
+            improvedTitle = improvedTitle + '!';
+        }
+        if (content.includes('2x1') || content.includes('promoción')) {
+            improvedTitle = improvedTitle.replace('promoción', 'PROMOCIÓN ESPECIAL');
+        }
+        
+        suggestions.push({
+            type: 'title',
+            score: Math.min(score + 25, 95),
+            original: content,
+            improved: improvedTitle,
+            improvements: improvements,
+            explanation: 'Los títulos con emojis, números específicos y signos de exclamación generan +65% más engagement'
+        });
+        
+    } else if (type === 'description') {
+        // Analyze description
+        const descLength = content.length;
+        const hasCallToAction = /compra|pedí|visitá|llamá|reservá|aprovechá/i.test(content);
+        const hasBenefits = /gratis|descuento|oferta|especial|nuevo|único/i.test(content);
+        
+        let score = 65;
+        let improvements = [];
+        
+        if (descLength < 50) {
+            score -= 15;
+            improvements.push('Agregá más detalles sobre los beneficios');
+        }
+        if (descLength > 150) {
+            score -= 10;
+            improvements.push('Acortá la descripción para mayor claridad');
+        }
+        if (!hasCallToAction) {
+            score -= 20;
+            improvements.push('Incluí una llamada a la acción clara');
+        }
+        if (!hasBenefits) {
+            score -= 15;
+            improvements.push('Destacá los beneficios únicos de tu oferta');
+        }
+        
+        // Generate improved description
+        let improvedDesc = content;
+        if (!hasCallToAction) {
+            improvedDesc += ' ¡Pedí ya y aprovechá esta oferta especial!';
+        }
+        if (!hasBenefits && !content.includes('especial')) {
+            improvedDesc = 'Oferta especial: ' + improvedDesc;
+        }
+        
+        suggestions.push({
+            type: 'description',
+            score: Math.min(score + 20, 92),
+            original: content,
+            improved: improvedDesc,
+            improvements: improvements,
+            explanation: 'Las descripciones con llamadas a la acción claras aumentan las conversiones en +45%'
+        });
+    }
+    
+    return suggestions;
+}
+
+function displayAISuggestions(suggestions) {
+    const aiContent = document.getElementById('aiContent');
+    
+    let html = '';
+    suggestions.forEach(suggestion => {
+        html += `
+            <div class="ai-suggestion">
+                <h5>Análisis de ${suggestion.type === 'title' ? 'título' : 'descripción'}</h5>
+                <p>${suggestion.explanation}</p>
+                
+                <div class="ai-score">
+                    <span class="score-label">Puntuación de engagement:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: ${suggestion.score}%"></div>
+                    </div>
+                    <span><strong>${suggestion.score}/100</strong></span>
+                </div>
+                
+                ${suggestion.improvements.length > 0 ? `
+                    <div style="margin: 15px 0;">
+                        <strong>Mejoras sugeridas:</strong>
+                        <ul style="margin: 5px 0; padding-left: 20px;">
+                            ${suggestion.improvements.map(imp => `<li>${imp}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+                
+                <div class="suggestion-text">
+                    <strong>Versión optimizada:</strong><br>
+                    "${suggestion.improved}"
+                </div>
+            </div>
+        `;
+    });
+    
+    aiContent.innerHTML = html;
+}
+
+function applySuggestions() {
+    if (!currentAISuggestions) return;
+    
+    currentAISuggestions.forEach(suggestion => {
+        if (suggestion.type === 'title') {
+            document.getElementById('adTitle').value = suggestion.improved;
+        } else if (suggestion.type === 'description') {
+            document.getElementById('adDescription').value = suggestion.improved;
+        }
+    });
+    
+    showNotification('¡Sugerencias aplicadas exitosamente!', 'success');
+    closeAIPanel();
+}
+
+function closeAIPanel() {
+    document.getElementById('aiAssistantPanel').style.display = 'none';
+    currentAISuggestions = null;
+}
+
+// Confetti Effect
+function createConfetti() {
+    const confettiContainer = document.createElement('div');
+    confettiContainer.className = 'confetti';
+    document.body.appendChild(confettiContainer);
+    
+    // Create confetti pieces
+    for (let i = 0; i < 100; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.animationDelay = Math.random() * 3 + 's';
+        piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confettiContainer.appendChild(piece);
+    }
+    
+    // Remove confetti after animation
+    setTimeout(() => {
+        document.body.removeChild(confettiContainer);
+    }, 5000);
+}
+
+// Mock function to simulate ad approval (for demo purposes)
+function simulateAdApproval() {
+    showNotification('¡Tu anuncio ha sido aprobado!', 'success');
+    createConfetti();
+}
+
+// Personal ads helper functions
+function updatePersonalAdPreview() {
+    const category = document.getElementById('adCategory').value;
+    const title = document.getElementById('adTitle').value;
+    const pushMessage = document.getElementById('pushMessage').value;
+    
+    if (category === 'personal' && title && pushMessage) {
+        console.log('Personal ad preview updated:', { title, pushMessage });
+    }
+}
+
 // Initialize page
 document.addEventListener('DOMContentLoaded', function() {
     checkAuthentication();
