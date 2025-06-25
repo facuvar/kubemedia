@@ -1389,6 +1389,26 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .moments-accordion {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .cta-text {
+        text-align: center;
+    }
+    
+    .cta-text .finale-title,
+    .cta-text .finale-description {
+        text-align: center;
+    }
+}
+
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
@@ -2089,8 +2109,8 @@ body {
 
 /* Moments Accordion Styles */
 .moments-accordion {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     margin-top: 2rem;
 }
@@ -2201,6 +2221,52 @@ body {
 
 .accordion-item.active .accordion-header {
     background: rgba(255, 107, 157, 0.1);
+}
+
+/* CTA Grid Layout */
+.cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.cta-text {
+    text-align: left;
+}
+
+.cta-text .finale-icon {
+    margin-bottom: 1.5rem;
+}
+
+.cta-text .finale-title {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.cta-text .finale-description {
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.cta-action {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-action .finale-question h4 {
+    margin-bottom: 1rem;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.cta-action .finale-tagline {
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
 }
 
 @media (max-width: 480px) {
