@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadUserData();
     initializeFilters();
     initializeUpload();
+    initializeAvailabilityGrid();
     checkAuthentication();
 });
 
