@@ -427,6 +427,9 @@ function selectAd(adId, adTitle) {
         button.classList.add('selected');
     }
     
+    // Show ad preview
+    showAdPreview(adId, adTitle);
+    
     updateBookingSummary();
 }
 
@@ -685,4 +688,215 @@ if (window.location.hash === '#upload') {
             showUploadModal();
         }
     }, 500);
+}
+
+// Ad Preview Functions
+function showAdPreview(adId, adTitle) {
+    const previewSection = document.getElementById('adPreviewSection');
+    previewSection.style.display = 'block';
+    
+    // Get ad data
+    const adData = getAdData(adId, adTitle);
+    
+    // Display preview
+    displayAdPreview(adData);
+    displayAdInfo(adData);
+    
+    // Smooth scroll to preview
+    setTimeout(() => {
+        previewSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }, 100);
+}
+
+function getAdData(adId, adTitle) {
+    // Get saved ads from localStorage
+    const savedAds = JSON.parse(localStorage.getItem('customerAds') || '[]');
+    
+    // Demo ads data
+    const demoAds = {
+        'ad1': {
+            id: 'ad1',
+            title: 'Promo Pizza 2x1',
+            type: 'image',
+            mediaUrl: '../whooper.jpg',
+            description: 'Promoción especial de pizza 2x1 todos los días',
+            duration: 15,
+            status: 'approved'
+        },
+        'demo-cumple': {
+            id: 'demo-cumple',
+            title: 'Cumpleaños de mamá',
+            type: 'image', 
+            mediaUrl: '../cafe-martinez.jpg',
+            description: 'Celebramos el cumpleaños de mamá en Café Martinez',
+            duration: 20,
+            status: 'approved'
+        },
+        'demo-black': {
+            id: 'demo-black',
+            title: 'Black Friday Sale',
+            type: 'text',
+            text: 'BLACK FRIDAY\n50% OFF\nTodos los productos',
+            description: 'Gran promoción de Black Friday con descuentos especiales',
+            duration: 15,
+            status: 'approved'
+        }
+    };
+    
+    // Find ad in saved ads or demo ads
+    let adData = savedAds.find(ad => ad.id === adId);
+    if (!adData) {
+        adData = demoAds[adId];
+    }
+    
+    // Fallback ad data
+    if (!adData) {
+        adData = {
+            id: adId,
+            title: adTitle,
+            type: 'text',
+            text: adTitle,
+            description: 'Anuncio personalizado',
+            duration: 15,
+            status: 'approved'
+        };
+    }
+    
+    return adData;
+}
+
+function displayAdPreview(adData) {
+    const screenContent = document.getElementById('screenContent');
+    
+    if (adData.type === 'image' && adData.mediaUrl) {
+        screenContent.innerHTML = `
+            <img src="${adData.mediaUrl}" 
+                 alt="${adData.title}" 
+                 class="preview-media"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="preview-placeholder" style="display: none;">
+                <div class="placeholder-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h4>${adData.title}</h4>
+                <p>Vista previa del anuncio</p>
+            </div>
+        `;
+    } else if (adData.type === 'video' && adData.mediaUrl) {
+        screenContent.innerHTML = `
+            <video class="preview-media" autoplay muted loop>
+                <source src="${adData.mediaUrl}" type="video/mp4">
+                Tu navegador no soporta video.
+            </video>
+        `;
+    } else {
+        // Text ad
+        const text = adData.text || adData.title;
+        screenContent.innerHTML = `
+            <div class="text-ad-preview">
+                <div class="text-content">${text.replace(/\n/g, '<br>')}</div>
+            </div>
+        `;
+        
+        // Add styles for text ad
+        screenContent.querySelector('.text-ad-preview').style.cssText = `
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        `;
+        
+        screenContent.querySelector('.text-content').style.cssText = `
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: bold;
+            line-height: 1.2;
+        `;
+    }
+}
+
+function displayAdInfo(adData) {
+    const adDetails = document.getElementById('adDetails');
+    const estimatedViews = document.getElementById('estimatedViews');
+    const estimatedReach = document.getElementById('estimatedReach');
+    
+    // Display ad information
+    adDetails.innerHTML = `
+        <div class="ad-info-content">
+            <div class="info-item">
+                <span class="info-label">Título</span>
+                <span class="info-value">${adData.title}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Descripción</span>
+                <span class="info-value">${adData.description || 'Sin descripción'}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Tipo</span>
+                <span class="info-value">${getAdTypeLabel(adData.type)}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Duración sugerida</span>
+                <span class="info-value">${adData.duration || 15} segundos</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Estado</span>
+                <span class="info-value" style="color: #4caf50;">
+                    <i class="fas fa-check-circle"></i> Aprobado
+                </span>
+            </div>
+        </div>
+    `;
+    
+    // Calculate estimated metrics based on location and time
+    const baseViews = locationData ? getLocationViewsMultiplier(locationData.name) : 1000;
+    const timeMultiplier = selectedTimeSlot ? getTimeMultiplier(selectedTimeSlot) : 1;
+    const durationMultiplier = selectedDuration ? Math.max(0.5, selectedDuration / 30) : 1;
+    
+    const estimatedViewsCount = Math.round(baseViews * timeMultiplier * durationMultiplier);
+    const estimatedReachCount = Math.round(estimatedViewsCount * 0.7); // 70% reach rate
+    
+    estimatedViews.textContent = estimatedViewsCount.toLocaleString();
+    estimatedReach.textContent = estimatedReachCount.toLocaleString();
+}
+
+function getAdTypeLabel(type) {
+    const labels = {
+        'image': 'Imagen',
+        'video': 'Video',
+        'text': 'Solo texto'
+    };
+    return labels[type] || type;
+}
+
+function getLocationViewsMultiplier(locationName) {
+    const multipliers = {
+        'Unicenter Shopping': 2500,
+        'TOM Shopping': 1800,
+        'Dot Baires Shopping': 2200,
+        'Aeropuerto Internacional Ezeiza': 4000,
+        'Universidad Palermo': 1500,
+        'Plaza Oeste': 1600
+    };
+    return multipliers[locationName] || 1500;
+}
+
+function getTimeMultiplier(timeSlot) {
+    const hour = parseInt(timeSlot.split(':')[0]);
+    
+    // Peak hours have higher multipliers
+    if (hour >= 12 && hour <= 14) return 1.5; // Lunch time
+    if (hour >= 17 && hour <= 20) return 1.8; // Evening rush
+    if (hour >= 10 && hour <= 12) return 1.3; // Morning rush
+    if (hour >= 15 && hour <= 17) return 1.2; // Afternoon
+    if (hour >= 20 && hour <= 22) return 1.1; // Night
+    
+    return 0.8; // Off-peak hours
 } 
