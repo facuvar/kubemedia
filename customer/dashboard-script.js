@@ -414,6 +414,10 @@ function submitAd() {
         localStorage.setItem('customerAds', JSON.stringify(existingAds));
         
         hideUploadModal();
+        
+        // Show confetti effect for successful submission
+        createConfetti();
+        
         showNotification('¡Anuncio enviado para aprobación! Te llevamos a "Mis Anuncios" para que puedas seguir el estado.', 'success');
         
         // Redirect to My Ads page after 2 seconds
