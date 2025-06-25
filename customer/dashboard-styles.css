@@ -482,7 +482,35 @@
 .upload-modal {
     max-width: 950px;
     width: 98vw;
-    max-height: 90vh;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Upload Modal */
+.upload-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.upload-modal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.upload-modal::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.upload-modal::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-blue), var(--primary-blue));
+    box-shadow: 0 2px 8px rgba(79, 195, 247, 0.3);
+}
+
+/* Firefox scrollbar styling */
+.upload-modal {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-blue) rgba(255, 255, 255, 0.05);
 }
 
 .upload-steps {
@@ -1616,6 +1644,39 @@
     
     .personal-examples {
         justify-content: center;
+    }
+    
+    /* Upload Modal Mobile Adjustments */
+    .upload-modal {
+        max-height: 85vh;
+        width: 95vw;
+        margin: 2% auto;
+    }
+    
+    .step-indicator {
+        gap: 1rem;
+    }
+    
+    .step-number {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .step-label {
+        font-size: 0.75rem;
+    }
+}
+
+/* Additional mobile adjustments for very small screens */
+@media (max-width: 480px) {
+    .upload-modal {
+        max-height: 90vh;
+        width: 98vw;
+        margin: 1% auto;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
     }
 }
 

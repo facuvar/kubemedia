@@ -148,6 +148,11 @@ function resetUploadFlow() {
     updateStepDisplay();
     clearFilePreview();
     resetForms();
+    // Ensure the modal scrolls to top
+    const modal = document.querySelector('.upload-modal');
+    if (modal) {
+        modal.scrollTop = 0;
+    }
 }
 
 // Upload Step Management
@@ -239,7 +244,11 @@ function initializeUpload() {
 
 function handleFileSelect(e) {
     const files = Array.from(e.target.files);
-    processFiles(files);
+    if (files.length > 0) {
+        processFiles(files);
+        // Reset the input to allow selecting the same file again if needed
+        e.target.value = '';
+    }
 }
 
 function processFiles(files) {
@@ -292,7 +301,14 @@ function removeFile(index) {
 
 function clearFilePreview() {
     document.getElementById('filePreview').innerHTML = '';
-    document.getElementById('fileInput').value = '';
+    const fileInput = document.getElementById('fileInput');
+    fileInput.value = '';
+    // Force clear the input by cloning and replacing it
+    const newFileInput = fileInput.cloneNode(true);
+    fileInput.parentNode.replaceChild(newFileInput, fileInput);
+    // Re-attach event listener
+    newFileInput.addEventListener('change', handleFileSelect);
+    uploadedFiles = [];
 }
 
 function formatFileSize(bytes) {
@@ -421,10 +437,10 @@ function submitAd() {
         
         showNotification('¡Anuncio enviado para aprobación! Te llevamos a "Mis Anuncios" para que puedas seguir el estado.', 'success');
         
-        // Redirect to My Ads page after 2 seconds
+        // Redirect to My Ads page after 5 seconds to enjoy confetti
         setTimeout(() => {
             window.location.href = 'my-ads.html#uploaded';
-        }, 2000);
+        }, 5000);
         
         // Reset button
         submitBtn.disabled = false;

@@ -470,12 +470,41 @@ body {
 
 .modal-content {
     background: var(--background-dark);
-    margin: 2% auto;
+    margin: 5% auto;
     padding: 0;
     border-radius: 12px;
     max-width: 500px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     animation: modalSlideIn 0.3s ease-out;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* Custom Scrollbar for Modal Content */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-blue), var(--primary-blue));
+    box-shadow: 0 2px 8px rgba(79, 195, 247, 0.3);
+}
+
+/* Firefox scrollbar styling */
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-blue) rgba(255, 255, 255, 0.05);
 }
 
 @keyframes modalSlideIn {
