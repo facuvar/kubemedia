@@ -1407,6 +1407,11 @@ body {
     .cta-text .finale-description {
         text-align: center;
     }
+    
+    .btn-moments, .btn-moments-premium {
+        padding: 1.2rem 2.5rem;
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1721,6 +1726,7 @@ body {
     font-size: 2.5rem;
     color: white;
     margin-bottom: 2.5rem;
+    margin-top: 4rem;
     text-align: center;
     font-weight: 700;
     display: flex;
@@ -2004,29 +2010,30 @@ body {
     font-size: 1.1rem !important;
 }
 
-.btn-moments {
+.btn-moments, .btn-moments-premium {
     background: linear-gradient(135deg, #ff6b9d 0%, #ffd700 50%, #c44569 100%);
     background-size: 200% 200%;
     color: white;
     border: none;
-    padding: 1.5rem 4rem;
+    padding: 1.5rem 3rem;
     border-radius: 50px;
-    font-size: 1.3rem;
-    font-weight: 800;
+    font-size: 1.2rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     position: relative;
     z-index: 1;
     box-shadow: 
-        0 15px 35px rgba(255, 107, 157, 0.5),
-        0 0 30px rgba(255, 215, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    animation: buttonGlow 3s ease-in-out infinite;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+        0 10px 25px rgba(255, 107, 157, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    animation: buttonGlow 4s ease-in-out infinite;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    overflow: hidden;
 }
 
 @keyframes buttonGlow {
@@ -2046,19 +2053,53 @@ body {
     }
 }
 
-.btn-moments:hover {
-    transform: translateY(-8px) scale(1.05);
+.btn-moments:hover, .btn-moments-premium:hover {
+    transform: translateY(-5px) scale(1.03);
     box-shadow: 
-        0 25px 50px rgba(255, 107, 157, 0.8),
-        0 0 60px rgba(255, 215, 0, 0.6),
-        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+        0 20px 40px rgba(255, 107, 157, 0.6),
+        0 0 40px rgba(255, 215, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, #c44569 0%, #ffd700 50%, #ff6b9d 100%);
     background-size: 200% 200%;
-    animation-duration: 1.5s;
+    animation-duration: 2s;
 }
 
-.btn-moments i {
+.btn-moments i, .btn-moments-premium i {
     font-size: 1.1rem;
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.btn-moments-premium:hover .btn-glow {
+    transform: translateX(100%);
+}
+
+.btn-sparkle {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 1rem;
+    animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.2);
+        opacity: 1;
+    }
 }
 
 /* Responsive for Kube Moments */
@@ -2226,9 +2267,10 @@ body {
 /* CTA Grid Layout */
 .cta-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
     gap: 3rem;
     align-items: center;
+    margin-bottom: 3rem;
 }
 
 .cta-text {
@@ -2251,22 +2293,29 @@ body {
 
 .cta-action {
     text-align: center;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    border: none;
 }
 
-.cta-action .finale-question h4 {
+.finale-question {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.finale-question h4 {
     margin-bottom: 1rem;
     color: white;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
-.cta-action .finale-tagline {
-    margin-bottom: 2rem;
+.finale-question .finale-tagline {
+    margin-bottom: 0;
     color: rgba(255, 255, 255, 0.8);
     font-size: 1.1rem;
+    line-height: 1.6;
 }
 
 @media (max-width: 480px) {
