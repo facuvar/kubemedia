@@ -281,6 +281,29 @@ body {
     margin: 2rem 0;
 }
 
+.btn-admin-access {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-admin-access:hover {
+    color: var(--primary-white);
+    border-color: var(--primary-blue);
+    background: rgba(79, 172, 254, 0.1);
+    transform: translateY(-1px);
+}
+
 /* Hero Section */
 .hero {
     position: relative;
