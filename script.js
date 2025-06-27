@@ -1,3 +1,122 @@
+// SOLUCIÓN URGENTE: Bloquear completamente el puerto 8080
+(function() {
+    'use strict';
+    
+    // Función para limpiar URLs con puerto 8080
+    function cleanURL(url) {
+        if (typeof url === 'string' && url.includes(':8080')) {
+            console.warn('🚫 BLOQUEADO puerto 8080:', url);
+            
+            // Casos específicos para admin
+            if (url.includes('admin')) {
+                return '/admin/';
+            }
+            
+            // Limpiar cualquier URL con puerto 8080
+            return url.replace(/https?:\/\/[^\/]+:8080/, '');
+        }
+        return url;
+    }
+    
+    // Override inmediato de window.location
+    const originalLocation = window.location;
+    let isIntercepting = false;
+    
+    // Interceptar asignaciones de location.href
+    Object.defineProperty(window.location, 'href', {
+        set: function(url) {
+            if (isIntercepting) return; // Evitar loops infinitos
+            
+            const cleanedURL = cleanURL(url);
+            if (cleanedURL !== url) {
+                console.log('✅ REDIRIGIENDO a URL limpia:', cleanedURL);
+                isIntercepting = true;
+                originalLocation.href = cleanedURL;
+                isIntercepting = false;
+                return;
+            }
+            
+            originalLocation.href = url;
+        },
+        get: function() {
+            return originalLocation.href;
+        }
+    });
+    
+    // Interceptar window.open
+    const originalOpen = window.open;
+    window.open = function(url, ...args) {
+        const cleanedURL = cleanURL(url);
+        return originalOpen.call(this, cleanedURL, ...args);
+    };
+    
+    // Interceptar todos los clics en la página
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a, button, [onclick]');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        const onclick = link.getAttribute('onclick');
+        
+        // Verificar href
+        if (href && href.includes(':8080')) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            const cleanedURL = cleanURL(href);
+            console.log('🔧 CLICK interceptado, redirigiendo a:', cleanedURL);
+            window.location.href = cleanedURL;
+            return false;
+        }
+        
+        // Verificar onclick
+        if (onclick && onclick.includes(':8080')) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            console.log('🔧 ONCLICK interceptado con puerto 8080');
+            if (onclick.includes('admin')) {
+                window.location.href = '/admin/';
+            }
+            return false;
+        }
+    }, true); // Usar capture para interceptar antes que otros handlers
+    
+    // Verificar cada 1 segundo si hay elementos problemáticos
+    setInterval(function() {
+        const problematicElements = document.querySelectorAll('[href*=":8080"], [onclick*=":8080"]');
+        if (problematicElements.length > 0) {
+            console.warn('⚠️ ENCONTRADOS elementos con puerto 8080:', problematicElements);
+            
+            problematicElements.forEach(function(element) {
+                const href = element.getAttribute('href');
+                const onclick = element.getAttribute('onclick');
+                
+                if (href && href.includes(':8080')) {
+                    const cleanedHref = cleanURL(href);
+                    element.setAttribute('href', cleanedHref);
+                    console.log('🔧 HREF corregido:', href, '→', cleanedHref);
+                }
+                
+                if (onclick && onclick.includes(':8080')) {
+                    element.removeAttribute('onclick');
+                    element.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (onclick.includes('admin')) {
+                            window.location.href = '/admin/';
+                        }
+                    });
+                    console.log('🔧 ONCLICK corregido');
+                }
+            });
+        }
+    }, 1000);
+    
+    console.log('🛡️ PROTECCIÓN ANTI-8080 ACTIVADA');
+})();
+
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
     // Fix admin redirections to use relative URLs
@@ -311,47 +430,4 @@ function fixAdminRedirections() {
             console.warn('Found hardcoded port in script, please review:', script);
         }
     });
-}
-
-// Override window.location to prevent hardcoded ports
-const originalLocation = window.location;
-
-// Intercept window.location.href assignments
-Object.defineProperty(window.location, 'href', {
-    set: function(url) {
-        console.log('Intercepting redirect to:', url);
-        
-        // Clean any hardcoded ports from URLs
-        if (typeof url === 'string' && url.includes(':8080')) {
-            console.warn('Blocked redirect with port 8080:', url);
-            
-            // Remove the port and domain, keep only the path
-            url = url.replace(/https?:\/\/[^\/]+:8080/, '');
-            
-            // If it's admin path, ensure it's correct
-            if (url.includes('admin')) {
-                url = '/admin/';
-            }
-            
-            console.log('Redirecting to cleaned URL:', url);
-        }
-        
-        // Use the original location setter
-        originalLocation.href = url;
-    }
-});
-
-// Also intercept window.open calls
-const originalOpen = window.open;
-window.open = function(url, ...args) {
-    if (typeof url === 'string' && url.includes(':8080')) {
-        console.warn('Blocked window.open with port 8080:', url);
-        url = url.replace(/https?:\/\/[^\/]+:8080/, '');
-        
-        if (url.includes('admin')) {
-            url = '/admin/';
-        }
-    }
-    
-    return originalOpen.call(this, url, ...args);
-}; 
+} 
