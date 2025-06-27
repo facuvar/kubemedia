@@ -1,11 +1,10 @@
-# Redirecciones para evitar puerto 8080
-/*/:8080/admin /admin 301!
-/*/:8080/* /:splat 301!
+# Railway redirects - Evitar puerto 8080
+http://play.kubeagency.co:8080/admin https://play.kubeagency.co/admin 301!
+http://play.kubeagency.co:8080/admin/ https://play.kubeagency.co/admin/ 301!
+http://play.kubeagency.co:8080/* https://play.kubeagency.co/:splat 301!
 
-# Redirección para admin sin slash
+# Admin redirects
 /admin /admin/ 301
-
-# SPA fallback para admin
 /admin/* /admin/index.html 200
 
 # Security headers

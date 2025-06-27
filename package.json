@@ -1,0 +1,16 @@
+{
+  "name": "kube-demo-agencias-branding",
+  "version": "1.0.0",
+  "description": "Kube Media - Demo de agencias y branding",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -p $PORT",
+    "dev": "npx serve -s . -p 3000"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+} 

@@ -285,7 +285,26 @@ function fixAdminRedirections() {
         }
     });
     
-    // Also check for any window.location redirections in other scripts
+    // Override any existing onclick handlers that might have port 8080
+    document.addEventListener('click', function(e) {
+        const target = e.target.closest('a, button');
+        if (target) {
+            const href = target.getAttribute('href');
+            const onclick = target.getAttribute('onclick');
+            
+            if ((href && href.includes(':8080')) || (onclick && onclick.includes(':8080'))) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Force redirect to admin without port
+                if (href && href.includes('admin')) {
+                    window.location.href = '/admin/';
+                }
+            }
+        }
+    }, true);
+    
+    // Check all existing window.location redirections
     const scripts = document.querySelectorAll('script');
     scripts.forEach(script => {
         if (script.textContent.includes(':8080')) {
@@ -296,20 +315,43 @@ function fixAdminRedirections() {
 
 // Override window.location to prevent hardcoded ports
 const originalLocation = window.location;
-Object.defineProperty(window, 'location', {
-    get: function() {
-        return originalLocation;
-    },
+
+// Intercept window.location.href assignments
+Object.defineProperty(window.location, 'href', {
     set: function(url) {
+        console.log('Intercepting redirect to:', url);
+        
         // Clean any hardcoded ports from URLs
         if (typeof url === 'string' && url.includes(':8080')) {
-            url = url.replace(/http:\/\/[^:]+:8080/, '');
-            url = url.replace(/https:\/\/[^:]+:8080/, '');
-            // If it's just admin path, make it relative
-            if (url.includes('/admin')) {
-                url = url.replace(/.*\/admin/, './admin');
+            console.warn('Blocked redirect with port 8080:', url);
+            
+            // Remove the port and domain, keep only the path
+            url = url.replace(/https?:\/\/[^\/]+:8080/, '');
+            
+            // If it's admin path, ensure it's correct
+            if (url.includes('admin')) {
+                url = '/admin/';
             }
+            
+            console.log('Redirecting to cleaned URL:', url);
         }
+        
+        // Use the original location setter
         originalLocation.href = url;
     }
-}); 
+});
+
+// Also intercept window.open calls
+const originalOpen = window.open;
+window.open = function(url, ...args) {
+    if (typeof url === 'string' && url.includes(':8080')) {
+        console.warn('Blocked window.open with port 8080:', url);
+        url = url.replace(/https?:\/\/[^\/]+:8080/, '');
+        
+        if (url.includes('admin')) {
+            url = '/admin/';
+        }
+    }
+    
+    return originalOpen.call(this, url, ...args);
+}; 
