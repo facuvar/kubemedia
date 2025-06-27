@@ -1,0 +1,15 @@
+# Redirecciones para evitar puerto 8080
+/*/:8080/admin /admin 301!
+/*/:8080/* /:splat 301!
+
+# Redirección para admin sin slash
+/admin /admin/ 301
+
+# SPA fallback para admin
+/admin/* /admin/index.html 200
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block 

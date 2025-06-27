@@ -1,5 +1,8 @@
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
+    // Fix admin redirections to use relative URLs
+    fixAdminRedirections();
+    
     // Mobile Navigation Toggle
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -249,11 +252,64 @@ document.addEventListener('DOMContentLoaded', function() {
 
     benefits.forEach(benefit => {
         benefit.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px) scale(1.02)';
+            this.style.transform = 'translateY(-5px) scale(1.02)';
         });
 
         benefit.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(10px) scale(1)';
+            this.style.transform = 'translateY(-5px) scale(1)';
         });
     });
+});
+
+// Function to fix admin redirections and ensure relative URLs
+function fixAdminRedirections() {
+    // Find any elements that might redirect to admin with port
+    const adminLinks = document.querySelectorAll('a[href*="admin"], button[onclick*="admin"], .btn-demo-admin');
+    
+    adminLinks.forEach(element => {
+        if (element.tagName === 'A') {
+            // Fix href attributes
+            let href = element.getAttribute('href');
+            if (href && href.includes(':8080')) {
+                href = href.replace(/http:\/\/[^:]+:8080/, '');
+                href = href.replace(/https:\/\/[^:]+:8080/, '');
+                element.setAttribute('href', href);
+            }
+        } else if (element.tagName === 'BUTTON' || element.classList.contains('btn-demo-admin')) {
+            // Add click handler for admin demo buttons
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Redirect to admin using relative URL
+                window.location.href = './admin/';
+            });
+        }
+    });
+    
+    // Also check for any window.location redirections in other scripts
+    const scripts = document.querySelectorAll('script');
+    scripts.forEach(script => {
+        if (script.textContent.includes(':8080')) {
+            console.warn('Found hardcoded port in script, please review:', script);
+        }
+    });
+}
+
+// Override window.location to prevent hardcoded ports
+const originalLocation = window.location;
+Object.defineProperty(window, 'location', {
+    get: function() {
+        return originalLocation;
+    },
+    set: function(url) {
+        // Clean any hardcoded ports from URLs
+        if (typeof url === 'string' && url.includes(':8080')) {
+            url = url.replace(/http:\/\/[^:]+:8080/, '');
+            url = url.replace(/https:\/\/[^:]+:8080/, '');
+            // If it's just admin path, make it relative
+            if (url.includes('/admin')) {
+                url = url.replace(/.*\/admin/, './admin');
+            }
+        }
+        originalLocation.href = url;
+    }
 }); 
